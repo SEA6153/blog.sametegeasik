@@ -78,10 +78,6 @@ php -S localhost:8000
 
 ## 🎯 Kullanım
 
-### Admin Paneli Giriş
-- **Kullanıcı Adı**: `admin`
-- **Şifre**: `admin123`
-- **URL**: `admin.html`
 
 ### API Endpoints
 
