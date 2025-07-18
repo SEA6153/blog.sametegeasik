@@ -104,6 +104,12 @@ func main() {
 		c.File(baseDir + "/robots.txt")
 	})
 
+	// Serve Google verification file
+	r.GET("/googlea40d1f1aabd0d48d.html", func(c *gin.Context) {
+		c.Header("Content-Type", "text/html")
+		c.File(baseDir + "/googlea40d1f1aabd0d48d.html")
+	})
+
 	// Serve favicon
 	r.GET("/favicon.ico", func(c *gin.Context) {
 		c.Header("Content-Type", "image/x-icon")
