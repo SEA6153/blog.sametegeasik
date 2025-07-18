@@ -48,6 +48,13 @@
     
     <!-- Blog Yazıları -->
     <url>
+        <loc>https://sametegeasik.com/post1</loc>
+        <lastmod>2025-01-16T00:00:00+03:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
         <loc>https://sametegeasik.com/posts/spring-authorization-server-ile-sso-entegrasyonu</loc>
         <lastmod>2025-01-16T00:00:00+03:00</lastmod>
         <changefreq>monthly</changefreq>
