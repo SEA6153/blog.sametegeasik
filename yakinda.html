@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yakında - Samet Ege AŞIK</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6366f1',
+                        'secondary': '#8b5cf6',
+                        'accent': '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Theme transition */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* Theme toggle button animation */
+        .theme-toggle {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+        
+        .theme-toggle:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Animate on scroll */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Floating animation for coming soon badges */
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="/">
+                            <h1 class="text-2xl font-bold text-primary">
+                                <i class="fas fa-code mr-2"></i>Samet Ege AŞIK
+                            </h1>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Ana Sayfa</a>
+                        <a href="/yazilar" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Yazılar</a>
+                        <a href="/projeler" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Projeler</a>
+                        <a href="/hakkimda" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Hakkımda</a>
+                        <a href="/iletisim" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">İletişim</a>
+                        <!-- Theme Toggle Button -->
+                        <button id="themeToggle" class="theme-toggle text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i id="themeIcon" class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden flex items-center space-x-2">
+                    <!-- Mobile Theme Toggle -->
+                    <button id="mobileThemeToggle" class="theme-toggle text-gray-700 dark:text-gray-300 hover:text-primary p-2 rounded-md">
+                        <i id="mobileThemeIcon" class="fas fa-moon"></i>
+                    </button>
+                    <button class="text-gray-700 dark:text-gray-300 hover:text-primary" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-white dark:bg-gray-800 shadow-lg hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Ana Sayfa</a>
+                <a href="/yazilar" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Yazılar</a>
+                <a href="/projeler" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Projeler</a>
+                <a href="/hakkimda" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Hakkımda</a>
+                <a href="/iletisim" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">İletişim</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-primary to-secondary text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="animate-on-scroll">
+                <i class="fas fa-hourglass-half text-6xl mb-6 floating"></i>
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Yakında Gelecek Yazılar
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-200 mb-8">
+                    Bu içerikler üzerinde aktif olarak çalışıyorum. Güncellemeler için takipte kalın!
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="/yazilar" class="bg-white text-primary px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Yazılara Geri Dön
+                    </a>
+                    <a href="https://www.linkedin.com/in/samet-ege-asik/" target="_blank" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-primary transition-colors">
+                        <i class="fab fa-linkedin mr-2"></i>LinkedIn'de Takip Et
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Coming Soon Articles -->
+    <section class="py-16 bg-white dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                    <i class="fas fa-pencil-alt text-primary mr-2"></i>Hazırlanan Yazılar
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    Şu anda bu konularda detaylı yazılar hazırlıyorum. Her biri profesyonel deneyimlerime dayanıyor.
+                </p>
+            </div>
+            
+            <div id="comingSoonContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Coming soon posts will be loaded here dynamically -->
+                <div class="text-center col-span-full py-12">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                    <p class="text-gray-600 dark:text-gray-300">Yakında gelecek yazılar yükleniyor...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                    <i class="fas fa-chart-line text-primary mr-2"></i>Yazım Süreci
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">
+                    Her yazı için detaylı araştırma ve kod örnekleri hazırlıyorum.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="animate-on-scroll text-center">
+                    <div class="bg-primary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-research text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Araştırma</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Güncel teknolojileri ve best practice'leri araştırıyorum.
+                    </p>
+                </div>
+                
+                <div class="animate-on-scroll text-center">
+                    <div class="bg-secondary text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-code text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Kod Örnekleri</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Gerçek projelerden pratik örnekler hazırlıyorum.
+                    </p>
+                </div>
+                
+                <div class="animate-on-scroll text-center">
+                    <div class="bg-accent text-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-edit text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Yazım</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Anlaşılır ve kapsamlı içerik oluşturuyorum.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-white dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-primary to-secondary rounded-lg p-8 text-white text-center">
+                <h2 class="text-3xl font-bold mb-4">
+                    <i class="fas fa-bell mr-2"></i>Yeni Yazıları Kaçırma!
+                </h2>
+                <p class="text-xl mb-6">
+                    Yazılar yayınlandığında ilk siz haberdar olun.
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="mailto:blog.sametegeasik@gmail.com" class="bg-white text-primary px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-envelope mr-2"></i>E-posta ile Bildir
+                    </a>
+                    <a href="https://www.linkedin.com/in/samet-ege-asik/" target="_blank" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-primary transition-colors">
+                        <i class="fab fa-linkedin mr-2"></i>LinkedIn'de Takip Et
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-code mr-2"></i>Samet Ege AŞIK
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        Java Backend Developer @ MEB YEĞİTEK. OAuth2, mikroservis mimarisi ve 
+                        modern backend teknolojileri üzerine yazılar.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="mailto:blog.sametegeasik@gmail.com" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/samet-ege-asik/" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="https://github.com/SEA6153" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Hızlı Linkler</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Ana Sayfa</a></li>
+                        <li><a href="/hakkimda" class="text-gray-400 hover:text-white transition-colors">Hakkımda</a></li>
+                        <li><a href="/yazilar" class="text-gray-400 hover:text-white transition-colors">Yazılar</a></li>
+                        <li><a href="/projeler" class="text-gray-400 hover:text-white transition-colors">Projeler</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Kategoriler</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/yazilar" class="text-gray-400 hover:text-white transition-colors">OAuth2</a></li>
+                        <li><a href="/yazilar" class="text-gray-400 hover:text-white transition-colors">Spring Boot</a></li>
+                        <li><a href="/yazilar" class="text-gray-400 hover:text-white transition-colors">Mikroservis</a></li>
+                        <li><a href="/yazilar" class="text-gray-400 hover:text-white transition-colors">DevOps</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Samet Ege AŞIK. Tüm hakları saklıdır.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Dark mode functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                updateThemeIcons('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateThemeIcons('light');
+            }
+        }
+
+        function updateThemeIcons(theme) {
+            const themeIcon = document.getElementById('themeIcon');
+            const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+            
+            if (theme === 'dark') {
+                themeIcon.className = 'fas fa-sun';
+                mobileThemeIcon.className = 'fas fa-sun';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                mobileThemeIcon.className = 'fas fa-moon';
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            const theme = isDark ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+            updateThemeIcons(theme);
+        }
+
+        // Initialize theme on page load
+        initTheme();
+
+        // Add event listeners for theme toggle buttons
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('mobileThemeToggle').addEventListener('click', toggleTheme);
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                const theme = e.matches ? 'dark' : 'light';
+                document.documentElement.classList.toggle('dark', e.matches);
+                updateThemeIcons(theme);
+            }
+        });
+        
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+    
+    <script>
+        // Coming Soon Posts Loading
+        async function loadComingSoonPosts() {
+            try {
+                const response = await fetch('/api/comingsoon');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    displayComingSoonPosts(result.data);
+                } else {
+                    showErrorMessage();
+                }
+            } catch (error) {
+                console.error('Error loading coming soon posts:', error);
+                showErrorMessage();
+            }
+        }
+        
+        function displayComingSoonPosts(posts) {
+            const container = document.getElementById('comingSoonContainer');
+            
+            if (!posts || posts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center col-span-full py-12">
+                        <i class="fas fa-hourglass-half text-6xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-600 dark:text-gray-300">Henüz yakında gelecek yazı bulunmuyor.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = posts.map(post => createComingSoonPostCard(post)).join('');
+            
+            // Re-observe new elements for animation
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        function createComingSoonPostCard(post) {
+            const statusInfo = getStatusInfo(post.status);
+            const categoryIcon = getCategoryIcon(post.category);
+            const gradientClass = getGradientClass(post.category);
+            const estimatedDate = post.estimated_date ? formatDate(post.estimated_date) : 'Tarih belirsiz';
+            
+            return `
+                <div class="animate-on-scroll bg-gradient-to-br ${gradientClass} rounded-lg p-8 text-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                    <div class="text-center mb-6">
+                        <i class="${categoryIcon} text-6xl mb-4 floating"></i>
+                        <span class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-medium">${post.category}</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">${post.title}</h3>
+                    <p class="text-gray-200 mb-6">
+                        ${post.description}
+                    </p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-300 ${statusInfo.class}">
+                                <i class="${statusInfo.icon} mr-1"></i>${statusInfo.text}
+                            </span>
+                            <span class="text-sm text-gray-300">
+                                <i class="fas fa-star mr-1"></i>Öncelik: ${post.priority}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-300">
+                            <i class="fas fa-calendar mr-1"></i>${estimatedDate}
+                        </span>
+                        <span class="text-sm text-gray-300">
+                            <i class="fas fa-user mr-1"></i>Samet Ege AŞIK
+                        </span>
+                    </div>
+                    ${post.tags ? `
+                        <div class="mt-4 pt-4 border-t border-gray-300 border-opacity-20">
+                            <div class="flex flex-wrap gap-2">
+                                ${post.tags.split(',').map(tag => `
+                                    <span class="px-2 py-1 text-xs bg-white bg-opacity-20 rounded">${tag.trim()}</span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        function getStatusInfo(status) {
+            switch(status) {
+                case 'planned':
+                    return { text: 'Planlandı', icon: 'fas fa-calendar-check', class: 'text-blue-300' };
+                case 'in_progress':
+                    return { text: 'Devam Ediyor', icon: 'fas fa-spinner', class: 'text-yellow-300' };
+                case 'completed':
+                    return { text: 'Tamamlandı', icon: 'fas fa-check-circle', class: 'text-green-300' };
+                default:
+                    return { text: 'Belirsiz', icon: 'fas fa-question-circle', class: 'text-gray-300' };
+            }
+        }
+        
+        function getCategoryIcon(category) {
+            const icons = {
+                'DevOps': 'fas fa-ship',
+                'Architecture': 'fas fa-sitemap',
+                'API': 'fas fa-code',
+                'AI/ML': 'fas fa-brain',
+                'Blockchain': 'fas fa-link',
+                'Database': 'fas fa-database',
+                'Security': 'fas fa-shield-alt',
+                'OAuth2': 'fas fa-key',
+                'Redis': 'fas fa-tachometer-alt',
+                'Kafka': 'fas fa-stream',
+                'Kariyer': 'fas fa-route',
+                'Spring': 'fas fa-leaf',
+                'Docker': 'fas fa-cube',
+                'Kubernetes': 'fas fa-dharmachakra'
+            };
+            return icons[category] || 'fas fa-file-alt';
+        }
+        
+        function getGradientClass(category) {
+            const gradients = {
+                'DevOps': 'from-blue-600 to-cyan-600',
+                'Architecture': 'from-orange-500 to-red-600',
+                'API': 'from-green-500 to-teal-600',
+                'AI/ML': 'from-purple-600 to-pink-600',
+                'Blockchain': 'from-indigo-600 to-blue-600',
+                'Database': 'from-gray-600 to-gray-800',
+                'Security': 'from-secondary to-primary',
+                'OAuth2': 'from-primary to-accent',
+                'Redis': 'from-accent to-secondary',
+                'Kafka': 'from-orange-500 to-red-600',
+                'Kariyer': 'from-green-500 to-teal-600',
+                'Spring': 'from-green-600 to-emerald-600',
+                'Docker': 'from-blue-500 to-indigo-600',
+                'Kubernetes': 'from-purple-500 to-indigo-600'
+            };
+            return gradients[category] || 'from-gray-500 to-gray-700';
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('tr-TR', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+        
+        function showErrorMessage() {
+            const container = document.getElementById('comingSoonContainer');
+            container.innerHTML = `
+                <div class="text-center col-span-full py-12">
+                    <i class="fas fa-exclamation-triangle text-6xl text-red-400 mb-4"></i>
+                    <p class="text-gray-600 dark:text-gray-300">Yakında gelecek yazılar yüklenirken bir hata oluştu.</p>
+                    <button onclick="loadComingSoonPosts()" class="mt-4 px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">
+                        <i class="fas fa-refresh mr-2"></i>Tekrar Dene
+                    </button>
+                </div>
+            `;
+        }
+        
+        // Load coming soon posts when page loads
+        loadComingSoonPosts();
+    </script>
+</body>
+</html> 

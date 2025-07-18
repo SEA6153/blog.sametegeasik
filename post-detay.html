@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Basic SEO Meta Tags -->
+    <title id="page-title">Yazı Detayı - Samet Ege Aşık</title>
+    <meta name="description" id="meta-description" content="Samet Ege Aşık'ın Java Backend Developer blog yazılarından biri. Yazılım geliştirme, Spring Boot, OAuth2 ve mikroservis mimarisi hakkında detaylı bilgi.">
+    <meta name="keywords" id="meta-keywords" content="java blog, spring boot, oauth2, mikroservis, backend geliştirme, yazılım geliştirme">
+    <meta name="author" content="Samet Ege Aşık">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" id="canonical-url" href="https://sametegeasik.com/posts/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" id="og-url" content="https://sametegeasik.com/posts/">
+    <meta property="og:title" id="og-title" content="Yazı Detayı - Samet Ege Aşık">
+    <meta property="og:description" id="og-description" content="Samet Ege Aşık'ın Java Backend Developer blog yazılarından biri.">
+    <meta property="og:image" id="og-image" content="https://sametegeasik.com/sea.jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Samet Ege Aşık">
+    <meta property="og:locale" content="tr_TR">
+    <meta property="article:author" content="Samet Ege Aşık">
+    <meta property="article:published_time" id="article-published" content="">
+    <meta property="article:modified_time" id="article-modified" content="">
+    <meta property="article:section" content="Technology">
+    <meta property="article:tag" id="article-tags" content="">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" id="twitter-url" content="https://sametegeasik.com/posts/">
+    <meta name="twitter:title" id="twitter-title" content="Yazı Detayı - Samet Ege Aşık">
+    <meta name="twitter:description" id="twitter-description" content="Samet Ege Aşık'ın Java Backend Developer blog yazılarından biri.">
+    <meta name="twitter:image" id="twitter-image" content="https://sametegeasik.com/sea.jpeg">
+    <meta name="twitter:creator" content="@sametegeasik">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Stylesheets -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- BlogPosting Schema (will be updated dynamically) -->
+    <script type="application/ld+json" id="blog-post-schema">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Yazı Detayı",
+      "description": "Samet Ege Aşık'ın blog yazısı",
+      "image": "https://sametegeasik.com/sea.jpeg",
+      "author": {
+        "@type": "Person",
+        "name": "Samet Ege Aşık",
+        "url": "https://sametegeasik.com"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Samet Ege Aşık"
+      },
+      "datePublished": "",
+      "dateModified": "",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://sametegeasik.com/posts/"
+      },
+      "genre": "Technology",
+      "inLanguage": "tr-TR",
+      "keywords": "",
+      "wordCount": 0,
+      "url": "https://sametegeasik.com/posts/"
+    }
+    </script>
+    
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json" id="breadcrumb-schema">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Ana Sayfa",
+          "item": "https://sametegeasik.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Yazılar",
+          "item": "https://sametegeasik.com/yazilar"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Yazı Detayı",
+          "item": "https://sametegeasik.com/posts/"
+        }
+      ]
+    }
+    </script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6366f1',
+                        'secondary': '#8b5cf6',
+                        'accent': '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Theme transition */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* Theme toggle button animation */
+        .theme-toggle {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+        
+        .theme-toggle:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Article content styles */
+        .article-content {
+            line-height: 1.8;
+        }
+        
+        .article-content h1, .article-content h2, .article-content h3, .article-content h4, .article-content h5, .article-content h6 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+        
+        .article-content code {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .article-content pre {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        .article-content pre code {
+            background: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="/">
+                            <h1 class="text-2xl font-bold text-primary">
+                                <i class="fas fa-code mr-2"></i>Samet Ege AŞIK
+                            </h1>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Ana Sayfa</a>
+                        <a href="/yazilar" class="text-primary px-3 py-2 rounded-md text-sm font-medium">Yazılar</a>
+                        <a href="/projeler" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Projeler</a>
+                        <a href="/hakkimda" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Hakkımda</a>
+                        <a href="/iletisim" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">İletişim</a>
+                        <!-- Theme Toggle Button -->
+                        <button id="themeToggle" class="theme-toggle text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i id="themeIcon" class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="md:hidden flex items-center space-x-2">
+                    <!-- Mobile Theme Toggle -->
+                    <button id="mobileThemeToggle" class="theme-toggle text-gray-700 dark:text-gray-300 hover:text-primary p-2 rounded-md">
+                        <i id="mobileThemeIcon" class="fas fa-moon"></i>
+                    </button>
+                    <button class="text-gray-700 dark:text-gray-300 hover:text-primary" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-white dark:bg-gray-800 shadow-lg hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Ana Sayfa</a>
+                <a href="/yazilar" class="block px-3 py-2 text-primary">Yazılar</a>
+                <a href="/projeler" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Projeler</a>
+                <a href="/hakkimda" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Hakkımda</a>
+                <a href="/iletisim" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">İletişim</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Loading State -->
+    <div id="loading" class="flex items-center justify-center min-h-screen">
+        <div class="text-center">
+            <i class="fas fa-spinner fa-spin text-4xl text-primary mb-4"></i>
+            <p class="text-gray-600 dark:text-gray-400">Yazı yükleniyor...</p>
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="error-state" class="hidden flex items-center justify-center min-h-screen">
+        <div class="text-center">
+            <i class="fas fa-exclamation-triangle text-6xl text-red-500 mb-4"></i>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Yazı bulunamadı</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">Aradığınız yazı mevcut değil veya kaldırılmış olabilir.</p>
+            <a href="/yazilar" class="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-secondary transition-colors">
+                Yazılara Geri Dön
+            </a>
+        </div>
+    </div>
+
+    <!-- Post Content -->
+    <div id="post-content" class="hidden">
+        <!-- Breadcrumb -->
+        <div class="bg-white dark:bg-gray-800 py-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <nav class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                    <a href="/" class="hover:text-primary transition-colors">Ana Sayfa</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <a href="/yazilar" class="hover:text-primary transition-colors">Yazılar</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <span id="breadcrumb-title" class="text-gray-900 dark:text-white">Yazı Detayı</span>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Post Header -->
+        <div class="bg-gradient-to-br from-primary to-accent py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="flex items-center justify-center mb-4">
+                    <span id="post-category" class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-medium">
+                        Kategori
+                    </span>
+                    <span id="post-date" class="text-white text-opacity-80 ml-4 text-sm">
+                        Tarih
+                    </span>
+                </div>
+                <h1 id="post-title" class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Yazı Başlığı
+                </h1>
+                <p id="post-excerpt" class="text-xl text-white text-opacity-90 max-w-2xl mx-auto">
+                    Yazı özeti
+                </p>
+            </div>
+        </div>
+
+        <!-- Post Body -->
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <!-- Post Meta -->
+                <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-user text-gray-500 dark:text-gray-400 mr-2"></i>
+                                <span id="post-author" class="text-gray-700 dark:text-gray-300">Yazar</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-eye text-gray-500 dark:text-gray-400 mr-2"></i>
+                                <span id="post-views" class="text-gray-700 dark:text-gray-300">0</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Paylaş:</span>
+                            <a id="share-twitter" href="#" class="text-blue-400 hover:text-blue-600 transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a id="share-linkedin" href="#" class="text-blue-600 hover:text-blue-800 transition-colors">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <button id="copy-url" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 transition-colors">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post Content -->
+                <div class="p-6 md:p-8">
+                    <div id="post-body" class="article-content text-gray-900 dark:text-gray-100">
+                        <!-- Content will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Post Tags -->
+                <div id="post-tags-container" class="hidden p-6 border-t border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center flex-wrap gap-2">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Etiketler:</span>
+                        <div id="post-tags" class="flex flex-wrap gap-2">
+                            <!-- Tags will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Posts -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Benzer Yazılar</h2>
+                <div id="related-posts" class="grid md:grid-cols-2 gap-6">
+                    <!-- Related posts will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Back to Articles -->
+            <div class="mt-12 text-center">
+                <a href="/yazilar" class="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-secondary transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Tüm Yazılara Geri Dön
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <p class="text-gray-600 dark:text-gray-400">
+                    © 2025 Samet Ege AŞIK. Tüm hakları saklıdır.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentPost = null;
+        let currentSlug = null;
+
+        // Get slug from URL
+        function getSlugFromUrl() {
+            const pathParts = window.location.pathname.split('/');
+            return pathParts[pathParts.length - 1];
+        }
+
+        // Fetch post from API
+        async function fetchPost() {
+            try {
+                currentSlug = getSlugFromUrl();
+                const response = await fetch(`/api/posts/${currentSlug}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentPost = data.data;
+                    renderPost();
+                    loadRelatedPosts();
+                    
+                    // Increment view count when post is loaded
+                    if (currentPost && currentPost.id) {
+                        await incrementViewCount(currentPost.id);
+                    }
+                } else {
+                    console.error('Error fetching post:', data.message);
+                    showErrorState();
+                }
+            } catch (error) {
+                console.error('Error fetching post:', error);
+                showErrorState();
+            }
+        }
+
+        // Render post content
+        function renderPost() {
+            const loading = document.getElementById('loading');
+            const postContent = document.getElementById('post-content');
+            
+            loading.style.display = 'none';
+            postContent.style.display = 'block';
+            
+            // Update page title
+            document.title = `${currentPost.title} - Samet Ege Aşık`;
+            document.getElementById('page-title').textContent = `${currentPost.title} - Samet Ege Aşık`;
+            
+            // Update SEO meta tags
+            updateSEOMetaTags();
+            
+            // Update breadcrumb
+            document.getElementById('breadcrumb-title').textContent = currentPost.title;
+            
+            // Update post header
+            document.getElementById('post-title').textContent = currentPost.title;
+            document.getElementById('post-excerpt').textContent = currentPost.excerpt || '';
+            
+            // Update post meta
+            const categories = currentPost.categories ? currentPost.categories.split(',').map(cat => cat.trim()) : [];
+            const primaryCategory = categories[0] || 'Genel';
+            document.getElementById('post-category').textContent = primaryCategory;
+            document.getElementById('post-date').textContent = formatDate(currentPost.created_at);
+            document.getElementById('post-author').textContent = currentPost.author?.username || 'Samet Ege Aşık';
+            document.getElementById('post-views').textContent = currentPost.view_count || 0;
+            
+            // Update post content
+            document.getElementById('post-body').innerHTML = formatContent(currentPost.content);
+            
+            // Update tags
+            updateTags();
+            
+            // Update sharing links
+            updateSharingLinks();
+        }
+
+        // Update SEO meta tags dynamically
+        function updateSEOMetaTags() {
+            if (!currentPost) return;
+            
+            // Basic meta tags
+            const metaDescription = document.getElementById('meta-description');
+            if (metaDescription) {
+                metaDescription.setAttribute('content', currentPost.excerpt || `${currentPost.title} - Samet Ege Aşık'ın blog yazısı`);
+            }
+            
+            const metaKeywords = document.getElementById('meta-keywords');
+            if (metaKeywords) {
+                const keywords = currentPost.tags ? currentPost.tags.split(',').map(tag => tag.trim()).join(', ') : 'java, spring boot, backend';
+                metaKeywords.setAttribute('content', keywords);
+            }
+            
+            // Open Graph tags
+            const ogTitle = document.getElementById('og-title');
+            if (ogTitle) ogTitle.setAttribute('content', currentPost.title);
+            
+            const ogDescription = document.getElementById('og-description');
+            if (ogDescription) ogDescription.setAttribute('content', currentPost.excerpt || `${currentPost.title} - Samet Ege Aşık'ın blog yazısı`);
+            
+            const ogUrl = document.getElementById('og-url');
+            if (ogUrl) ogUrl.setAttribute('content', `${window.location.origin}/posts/${currentPost.slug}`);
+            
+            const ogImage = document.getElementById('og-image');
+            if (ogImage) ogImage.setAttribute('content', currentPost.image_url || 'https://sametegeasik.com/sea.jpeg');
+            
+            // Twitter tags
+            const twitterTitle = document.getElementById('twitter-title');
+            if (twitterTitle) twitterTitle.setAttribute('content', currentPost.title);
+            
+            const twitterDescription = document.getElementById('twitter-description');
+            if (twitterDescription) twitterDescription.setAttribute('content', currentPost.excerpt || `${currentPost.title} - Samet Ege Aşık'ın blog yazısı`);
+            
+            const twitterUrl = document.getElementById('twitter-url');
+            if (twitterUrl) twitterUrl.setAttribute('content', `${window.location.origin}/posts/${currentPost.slug}`);
+            
+            const twitterImage = document.getElementById('twitter-image');
+            if (twitterImage) twitterImage.setAttribute('content', currentPost.image_url || 'https://sametegeasik.com/sea.jpeg');
+            
+            // Canonical URL
+            const canonicalUrl = document.getElementById('canonical-url');
+            if (canonicalUrl) canonicalUrl.setAttribute('href', `${window.location.origin}/posts/${currentPost.slug}`);
+            
+            // Article meta tags
+            const articlePublished = document.getElementById('article-published');
+            if (articlePublished) articlePublished.setAttribute('content', new Date(currentPost.created_at).toISOString());
+            
+            const articleModified = document.getElementById('article-modified');
+            if (articleModified) articleModified.setAttribute('content', new Date(currentPost.updated_at).toISOString());
+            
+            const articleTags = document.getElementById('article-tags');
+            if (articleTags) {
+                const tags = currentPost.tags ? currentPost.tags.split(',').map(tag => tag.trim()).join(', ') : '';
+                articleTags.setAttribute('content', tags);
+            }
+            
+            // Update JSON-LD schemas
+            updateSchemas();
+        }
+
+        // Update JSON-LD schemas
+        function updateSchemas() {
+            // Update BlogPosting schema
+            const blogPostSchema = document.getElementById('blog-post-schema');
+            if (blogPostSchema) {
+                const schema = {
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    "headline": currentPost.title,
+                    "description": currentPost.excerpt || '',
+                    "image": currentPost.image_url || 'https://sametegeasik.com/sea.jpeg',
+                    "author": {
+                        "@type": "Person",
+                        "name": currentPost.author?.username || 'Samet Ege Aşık',
+                        "url": "https://sametegeasik.com"
+                    },
+                    "publisher": {
+                        "@type": "Person",
+                        "name": "Samet Ege Aşık"
+                    },
+                    "datePublished": new Date(currentPost.created_at).toISOString(),
+                    "dateModified": new Date(currentPost.updated_at).toISOString(),
+                    "mainEntityOfPage": {
+                        "@type": "WebPage",
+                        "@id": `${window.location.origin}/posts/${currentPost.slug}`
+                    },
+                    "genre": "Technology",
+                    "inLanguage": "tr-TR",
+                    "keywords": currentPost.tags ? currentPost.tags.split(',').map(tag => tag.trim()).join(', ') : '',
+                    "wordCount": currentPost.content ? currentPost.content.length : 0,
+                    "url": `${window.location.origin}/posts/${currentPost.slug}`
+                };
+                blogPostSchema.textContent = JSON.stringify(schema);
+            }
+            
+            // Update breadcrumb schema
+            const breadcrumbSchema = document.getElementById('breadcrumb-schema');
+            if (breadcrumbSchema) {
+                const schema = {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Ana Sayfa",
+                            "item": "https://sametegeasik.com"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "Yazılar",
+                            "item": "https://sametegeasik.com/yazilar"
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 3,
+                            "name": currentPost.title,
+                            "item": `${window.location.origin}/posts/${currentPost.slug}`
+                        }
+                    ]
+                };
+                breadcrumbSchema.textContent = JSON.stringify(schema);
+            }
+        }
+
+        // Format content for display
+        function formatContent(content) {
+            if (!content) return '';
+            
+            // Convert line breaks to paragraphs
+            const paragraphs = content.split('\n\n').filter(p => p.trim());
+            return paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+        }
+
+        // Update tags
+        function updateTags() {
+            const tags = currentPost.tags ? currentPost.tags.split(',').map(tag => tag.trim()) : [];
+            const tagsContainer = document.getElementById('post-tags-container');
+            const tagsDiv = document.getElementById('post-tags');
+            
+            if (tags.length > 0) {
+                tagsDiv.innerHTML = tags.map(tag => 
+                    `<span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm">${tag}</span>`
+                ).join('');
+                tagsContainer.style.display = 'block';
+            } else {
+                tagsContainer.style.display = 'none';
+            }
+        }
+
+        // Update sharing links
+        function updateSharingLinks() {
+            const url = window.location.href;
+            const title = currentPost.title;
+            
+            document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+            document.getElementById('share-linkedin').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+            
+            document.getElementById('copy-url').addEventListener('click', function() {
+                navigator.clipboard.writeText(url).then(function() {
+                    this.innerHTML = '<i class="fas fa-check text-green-500"></i>';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-link"></i>';
+                    }, 2000);
+                }.bind(this));
+            });
+        }
+
+        // Load related posts
+        async function loadRelatedPosts() {
+            try {
+                const response = await fetch('/api/posts?limit=4');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const relatedPosts = data.data.posts.filter(post => post.id !== currentPost.id).slice(0, 2);
+                    renderRelatedPosts(relatedPosts);
+                }
+            } catch (error) {
+                console.error('Error loading related posts:', error);
+            }
+        }
+
+        // Render related posts
+        function renderRelatedPosts(posts) {
+            const relatedPostsDiv = document.getElementById('related-posts');
+            
+            relatedPostsDiv.innerHTML = posts.map(post => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                    <div class="h-32 bg-gradient-to-br from-primary to-accent relative">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="fas fa-file-alt text-white text-3xl"></i>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 hover:text-primary transition-colors">
+                            <a href="/posts/${post.slug}">${post.title}</a>
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-3">
+                            ${post.excerpt || post.content.substring(0, 100) + '...'}
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-500 dark:text-gray-400 text-sm">${formatDate(post.created_at)}</span>
+                            <a href="/posts/${post.slug}" class="text-primary hover:text-secondary font-medium text-sm">
+                                Devamını Oku
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('tr-TR', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        // Increment view count
+        async function incrementViewCount(postId) {
+            try {
+                const response = await fetch(`/api/posts/${postId}/view`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    console.log('View count incremented successfully');
+                    // Update the view count in UI with the real value from backend
+                    if (currentPost && currentPost.id === postId) {
+                        const viewCountElement = document.getElementById('post-views');
+                        if (viewCountElement && data.data && data.data.view_count !== undefined) {
+                            console.log(`POST-DETAY: Updated view count for post ${postId} to ${data.data.view_count}`);
+                            viewCountElement.textContent = data.data.view_count;
+                            // Update the current post object too
+                            currentPost.view_count = data.data.view_count;
+                        }
+                    }
+                    
+                    // Set a flag in localStorage to inform other pages about view count change
+                    const updateInfo = {
+                        postId: postId,
+                        viewCount: data.data ? data.data.view_count : null,
+                        timestamp: Date.now()
+                    };
+                    console.log('POST-DETAY: Setting localStorage flag:', updateInfo);
+                    localStorage.setItem('viewCountUpdated', JSON.stringify(updateInfo));
+                } else {
+                    console.log('View count increment skipped:', data.message);
+                }
+            } catch (error) {
+                console.error('Error incrementing view count:', error);
+            }
+        }
+
+        // Show error state
+        function showErrorState() {
+            const loading = document.getElementById('loading');
+            const errorState = document.getElementById('error-state');
+            
+            loading.style.display = 'none';
+            errorState.style.display = 'flex';
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+
+        function updateThemeIcons(isDark) {
+            if (isDark) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                mobileThemeIcon.classList.remove('fa-moon');
+                mobileThemeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                mobileThemeIcon.classList.remove('fa-sun');
+                mobileThemeIcon.classList.add('fa-moon');
+            }
+        }
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            updateThemeIcons(isDark);
+            
+            // Save theme preference to localStorage
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
+
+        // Set initial theme on page load
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Use saved theme if available, otherwise use system preference
+            const shouldUseDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+            
+            if (shouldUseDark) {
+                document.documentElement.classList.add('dark');
+                updateThemeIcons(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateThemeIcons(false);
+            }
+            
+            // Save the initial theme choice if not already saved
+            if (!savedTheme) {
+                localStorage.setItem('theme', shouldUseDark ? 'dark' : 'light');
+            }
+        }
+
+        // Initialize theme and load post
+        initializeTheme();
+        
+        // Load post when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchPost();
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const savedTheme = localStorage.getItem('theme');
+            // Only update if user hasn't manually set a preference
+            if (!savedTheme) {
+                const shouldUseDark = e.matches;
+                if (shouldUseDark) {
+                    document.documentElement.classList.add('dark');
+                    updateThemeIcons(true);
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    updateThemeIcons(false);
+                }
+                localStorage.setItem('theme', shouldUseDark ? 'dark' : 'light');
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Cache busting -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <title>Admin Panel - Samet Ege Aşık</title>
+    <script src="https://cdn.tailwindcss.com?v=3.4.0"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Fallback CSS -->
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #111827; color: #e5e7eb; }
+        .fallback-card { background: #1f2937; border-radius: 0.5rem; padding: 1.5rem; margin: 1rem 0; }
+        .fallback-btn { background: #3b82f6; color: white; padding: 0.75rem 1.5rem; border-radius: 0.375rem; text-decoration: none; display: inline-block; margin: 0.5rem; }
+        .fallback-input { background: #374151; color: #e5e7eb; border: 1px solid #4b5563; border-radius: 0.375rem; padding: 0.75rem; width: 100%; }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6366f1',
+                        'secondary': '#8b5cf6',
+                        'accent': '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Theme transition */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* Theme toggle button animation */
+        .theme-toggle {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+        
+        .theme-toggle:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block !important;
+        }
+        
+        .nav-link.active {
+            background-color: #f3f4f6;
+            color: #4f46e5;
+        }
+        
+        .dark .nav-link.active {
+            background-color: #374151;
+            color: #8b5cf6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Login Page -->
+    <div id="loginPage" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary to-secondary">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-md">
+            <div class="text-center mb-8">
+                <i class="fas fa-shield-alt text-primary text-4xl mb-4"></i>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Admin Panel</h1>
+                <p class="text-gray-600 dark:text-gray-300 mt-2">Yönetim paneline giriş yapın</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-user mr-1"></i>Kullanıcı Adı
+                    </label>
+                    <input type="text" id="username" name="username" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                           >
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i class="fas fa-lock mr-1"></i>Şifre
+                    </label>
+                    <input type="password" id="password" name="password" required
+                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                           >
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-primary text-white py-3 px-4 rounded-md hover:bg-secondary transition-colors font-semibold">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Giriş Yap
+                </button>
+            </form>
+            
+            <div id="loginError" class="mt-4 hidden">
+                <div class="bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <span id="loginErrorMessage">Kullanıcı adı veya şifre yanlış!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="hidden">
+        <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-6">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Admin Panel</h1>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Hoş geldiniz, canım Samet!</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- Theme Toggle Button -->
+                        <button id="themeToggle" class="theme-toggle text-gray-600 dark:text-gray-400 hover:text-primary px-3 py-2 rounded-md transition-colors">
+                            <i id="themeIcon" class="fas fa-moon"></i>
+                        </button>
+                        <a href="/" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                            <i class="fas fa-external-link-alt mr-1"></i> Siteyi Görüntüle
+                        </a>
+                        <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Çıkış
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white dark:bg-gray-800 shadow-sm min-h-screen">
+                <nav class="mt-8">
+                    <div class="px-4 space-y-2">
+                        <a href="#" onclick="showSection('dashboard')" 
+                           class="nav-link active flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-home mr-3"></i>Dashboard
+                        </a>
+                        <a href="#" onclick="showSection('posts')" 
+                           class="nav-link flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-file-alt mr-3"></i>Yazılar
+                        </a>
+                        <a href="#" onclick="showSection('projects')" 
+                           class="nav-link flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-project-diagram mr-3"></i>Projeler
+                        </a>
+                        <a href="#" onclick="showSection('messages')" 
+                           class="nav-link flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-envelope mr-3"></i>Mesajlar
+                            <span id="unreadMessagesBadge" class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full hidden">0</span>
+                        </a>
+                        <a href="#" onclick="showSection('comingsoon')" 
+                           class="nav-link flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-clock mr-3"></i>Yakında
+                        </a>
+                        <a href="#" onclick="showSection('newsletter')" 
+                           class="nav-link flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-envelope-open mr-3"></i>Newsletter
+                        </a>
+                        <a href="#" onclick="showSection('settings')" 
+                           class="nav-link flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-cog mr-3"></i>Ayarlar
+                        </a>
+                        <a href="#" onclick="logout()" 
+                           class="nav-link flex items-center px-4 py-2 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-sign-out-alt mr-3"></i>Çıkış
+                        </a>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-8 bg-gray-50 dark:bg-gray-900">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="section active">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Dashboard</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Sitenizin genel durumu ve istatistikleri</p>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border-l-4 border-blue-500">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Toplam Yazı</p>
+                                    <p class="text-3xl font-bold text-gray-900 dark:text-white" data-stat="total_posts">0</p>
+                                </div>
+                                <i class="fas fa-file-alt text-blue-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border-l-4 border-green-500">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Toplam Proje</p>
+                                    <p class="text-3xl font-bold text-gray-900 dark:text-white" data-stat="total_projects">0</p>
+                                </div>
+                                <i class="fas fa-project-diagram text-green-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border-l-4 border-red-500">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Okunmamış Mesaj</p>
+                                    <p class="text-3xl font-bold text-gray-900 dark:text-white" data-stat="unread_messages">0</p>
+                                </div>
+                                <i class="fas fa-envelope text-red-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border-l-4 border-purple-500">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Toplam Görüntüleme</p>
+                                    <p class="text-3xl font-bold text-gray-900 dark:text-white" data-stat="total_views">0</p>
+                                </div>
+                                <i class="fas fa-eye text-purple-500 text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border-l-4 border-orange-500">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">Newsletter Abonesi</p>
+                                    <p class="text-3xl font-bold text-gray-900 dark:text-white" data-stat="newsletter_subscribers">0</p>
+                                </div>
+                                <i class="fas fa-envelope-open text-orange-500 text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-8">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Hızlı İşlemler</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <button onclick="showSection('posts'); setTimeout(showNewPostForm, 100);" class="flex items-center justify-center p-4 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors">
+                                <i class="fas fa-plus mr-2"></i>
+                                Yeni Yazı
+                            </button>
+                            <button onclick="showSection('projects')" class="flex items-center justify-center p-4 bg-green-50 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-800 transition-colors">
+                                <i class="fas fa-plus mr-2"></i>
+                                Yeni Proje
+                            </button>
+                            <button onclick="showSection('messages')" class="flex items-center justify-center p-4 bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-800 transition-colors">
+                                <i class="fas fa-eye mr-2"></i>
+                                Mesajları Görüntüle
+                            </button>
+                            <button onclick="showSection('settings')" class="flex items-center justify-center p-4 bg-purple-50 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors">
+                                <i class="fas fa-cog mr-2"></i>
+                                Ayarlar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Posts Section -->
+                <div id="posts" class="section">
+                    <div class="mb-8 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Yazılar</h2>
+                            <p class="text-gray-600 dark:text-gray-400">Blog yazılarınızı yönetin</p>
+                        </div>
+                        <button onclick="showNewPostForm()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors">
+                            <i class="fas fa-plus mr-2"></i>Yeni Yazı
+                        </button>
+                    </div>
+
+                    <!-- Posts List -->
+                    <div id="postsListContainer" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                        <div class="p-6">
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead>
+                                        <tr class="border-b">
+                                            <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Başlık</th>
+                                            <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Durum</th>
+                                            <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Görüntülenme</th>
+                                            <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">Tarih</th>
+                                            <th class="text-left py-3 px-4 font-semibold text-gray-700 dark:text-gray-300">İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="postsTable">
+                                        <tr>
+                                            <td colspan="5" class="text-center py-8">
+                                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+                                                <p class="text-gray-500 dark:text-gray-400">Yazılar yükleniyor...</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                                    </div>
+                                                </div>
+                    </div>
+
+                    <!-- New/Edit Post Form -->
+                    <div id="postFormContainer" class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mt-6 hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 id="postFormTitle" class="text-xl font-bold text-gray-900 dark:text-white">Yeni Yazı Ekle</h3>
+                            <button onclick="hidePostForm()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                                <i class="fas fa-times text-xl"></i>
+                                                    </button>
+                                                </div>
+
+                        <form id="postForm" class="space-y-6">
+                            <input type="hidden" id="postId" name="id">
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    <div>
+                                    <label for="postTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Başlık</label>
+                                    <input type="text" id="postTitle" name="title" required
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                                    </div>
+                                <div>
+                                    <label for="postSlug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Slug (URL)</label>
+                                    <input type="text" id="postSlug" name="slug" required
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                                </div>
+                                                </div>
+
+                            <div>
+                                <label for="postExcerpt" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kısa Açıklama</label>
+                                <textarea id="postExcerpt" name="excerpt" rows="3" required
+                                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
+                            </div>
+
+                            <div>
+                                <label for="postContent" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">İçerik</label>
+                                <textarea id="postContent" name="content" rows="12" required
+                                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
+                        </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="postStatus" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Durum</label>
+                                    <select id="postStatus" name="status" required
+                                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                        <option value="published">Yayınlandı</option>
+                                        <option value="draft">Taslak</option>
+                                        <option value="inactive">Pasif</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="postCategory" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kategori</label>
+                                    <input type="text" id="postCategory" name="category" 
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="postTags" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Etiketler (virgülle ayırın)</label>
+                                    <input type="text" id="postTags" name="tags" placeholder="javascript, tutorial, web"
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                </div>
+                                <div>
+                                    <label for="postImage" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Görsel URL</label>
+                                    <input type="url" id="postImage" name="image_url" placeholder="https://example.com/image.jpg"
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end space-x-4">
+                                <button type="button" onclick="hidePostForm()" class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+                                    İptal
+                                </button>
+                                <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md hover:bg-secondary transition-colors">
+                                    <i class="fas fa-save mr-2"></i>Kaydet
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Projects Section -->
+                <div id="projects" class="section hidden">
+                    <div class="mb-8 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Projeler</h2>
+                            <p class="text-gray-600 dark:text-gray-400">Projelerinizi yönetin</p>
+                        </div>
+                        <button onclick="showNewProjectForm()" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-secondary transition-colors">
+                            <i class="fas fa-plus mr-2"></i>Yeni Proje
+                        </button>
+                    </div>
+
+                    <!-- Projects Grid -->
+                    <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="flex items-center justify-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                            <div class="text-center">
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+                                <p class="text-gray-500 dark:text-gray-400">Projeler yükleniyor...</p>
+                            </div>
+                            </div>
+                    </div>
+
+                    <!-- New/Edit Project Form -->
+                    <div id="projectForm" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                        <div class="bg-white dark:bg-gray-800 p-8 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-bold text-gray-900 dark:text-white" id="projectFormTitle">Yeni Proje</h3>
+                                <button onclick="hideProjectForm()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                                    <i class="fas fa-times text-xl"></i>
+                                </button>
+                            </div>
+                            
+                            <form id="projectFormElement" class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Proje Adı</label>
+                                        <input type="text" id="projectTitle" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Durum</label>
+                                        <select id="projectStatus" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                            <option value="active">Aktif</option>
+                                            <option value="completed">Tamamlandı</option>
+                                            <option value="archived">Arşivlendi</option>
+                                        </select>
+                            </div>
+                        </div>
+                        
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kısa Açıklama</label>
+                                    <input type="text" id="projectDescription" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white" required>
+                            </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Detaylı Açıklama</label>
+                                    <textarea id="projectContent" rows="4" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white" required></textarea>
+                            </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">GitHub URL</label>
+                                        <input type="url" id="projectGithubUrl" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Demo URL</label>
+                                        <input type="url" id="projectDemoUrl" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Resim URL</label>
+                                    <input type="url" id="projectImageUrl" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Teknolojiler (JSON Format)</label>
+                                    <textarea id="projectTechnologies" rows="3" class="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder='["React", "Node.js", "MongoDB"]'></textarea>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Örnek: ["Spring Boot", "PostgreSQL", "Docker"]</p>
+                                </div>
+                                
+                                <div class="flex justify-end space-x-4">
+                                    <button type="button" onclick="hideProjectForm()" class="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        İptal
+                                </button>
+                                    <button type="submit" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-secondary transition-colors">
+                                        <i class="fas fa-save mr-2"></i>Kaydet
+                                </button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Messages Section -->
+                <div id="messages" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Mesajlar</h2>
+                        <p class="text-gray-600 dark:text-gray-400">İletişim formundan gelen mesajları görüntüleyin</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+                        <div class="p-6">
+                            <div class="space-y-4">
+                                <!-- Messages will be loaded here dynamically -->
+                                <div class="flex justify-center items-center py-8">
+                                    <div class="text-center">
+                                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary dark:border-secondary mx-auto mb-4"></div>
+                                        <p class="text-gray-500 dark:text-gray-400">Mesajlar yükleniyor...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coming Soon Section -->
+                <div id="comingsoon" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Yakında Gelecek Yazılar</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Yakında yayınlanacak yazılarınızı planlayın ve yönetin</p>
+                    </div>
+
+                    <!-- Add New Coming Soon Post -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Yeni Yakında Gelecek Yazı</h3>
+                        <form id="comingSoonForm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="comingSoonTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <i class="fas fa-heading mr-1"></i>Başlık
+                                    </label>
+                                    <input type="text" id="comingSoonTitle" name="title" required
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                </div>
+                                <div>
+                                    <label for="comingSoonCategory" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <i class="fas fa-folder mr-1"></i>Kategori
+                                    </label>
+                                    <input type="text" id="comingSoonCategory" name="category" required
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                </div>
+                                <div>
+                                    <label for="comingSoonStatus" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <i class="fas fa-tasks mr-1"></i>Durum
+                                    </label>
+                                    <select id="comingSoonStatus" name="status" required
+                                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                        <option value="planned">Planlandı</option>
+                                        <option value="in_progress">Devam Ediyor</option>
+                                        <option value="completed">Tamamlandı</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="comingSoonPriority" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <i class="fas fa-star mr-1"></i>Öncelik (1-5)
+                                    </label>
+                                    <input type="number" id="comingSoonPriority" name="priority" min="1" max="5" required
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                </div>
+                                <div>
+                                    <label for="comingSoonTags" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <i class="fas fa-tags mr-1"></i>Etiketler (virgülle ayırın)
+                                    </label>
+                                    <input type="text" id="comingSoonTags" name="tags"
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                </div>
+                                <div>
+                                    <label for="comingSoonDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <i class="fas fa-calendar mr-1"></i>Tahmini Tarih
+                                    </label>
+                                    <input type="date" id="comingSoonDate" name="estimated_date"
+                                           class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <label for="comingSoonDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <i class="fas fa-align-left mr-1"></i>Açıklama
+                                </label>
+                                <textarea id="comingSoonDescription" name="description" rows="3" required
+                                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
+                            </div>
+                            <div class="mt-6 flex justify-end">
+                                <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <i class="fas fa-plus mr-2"></i>Ekle
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Coming Soon Posts List -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Yakında Gelecek Yazılar</h3>
+                        <div id="comingSoonPosts" class="space-y-4">
+                            <!-- Coming soon posts will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter Section -->
+                <div id="newsletter" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Newsletter Aboneleri</h2>
+                        <p class="text-gray-600 dark:text-gray-400">E-posta bültenine abone olan kullanıcıları yönetin</p>
+                    </div>
+
+                    <!-- Newsletter Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 bg-blue-100 dark:bg-blue-900 rounded-full">
+                                    <i class="fas fa-envelope-open text-blue-600 dark:text-blue-400 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Toplam Abone</h3>
+                                    <p id="totalSubscribers" class="text-2xl font-bold text-blue-600 dark:text-blue-400">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 bg-green-100 dark:bg-green-900 rounded-full">
+                                    <i class="fas fa-check-circle text-green-600 dark:text-green-400 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Aktif Abone</h3>
+                                    <p id="activeSubscribers" class="text-2xl font-bold text-green-600 dark:text-green-400">0</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                            <div class="flex items-center">
+                                <div class="p-3 bg-purple-100 dark:bg-purple-900 rounded-full">
+                                    <i class="fas fa-calendar-day text-purple-600 dark:text-purple-400 text-xl"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Bu Hafta</h3>
+                                    <p id="weeklySubscribers" class="text-2xl font-bold text-purple-600 dark:text-purple-400">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Subscribers List -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Abone Listesi</h3>
+                            <div class="flex space-x-3">
+                                <div class="relative">
+                                    <input type="text" id="newsletterSearch" placeholder="E-posta ara..." 
+                                           class="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                                </div>
+                                <button onclick="loadNewsletterSubscribers()" 
+                                        class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-colors">
+                                    <i class="fas fa-sync-alt mr-2"></i>Yenile
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">E-posta</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Durum</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Kayıt Tarihi</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="newsletterSubscribersTable" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                    <!-- Newsletter subscribers will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div id="newsletterPagination" class="mt-6 flex justify-between items-center">
+                            <!-- Pagination will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settings" class="section hidden">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Ayarlar</h2>
+                        <p class="text-gray-600 dark:text-gray-400">Site ve hesap ayarlarınızı yönetin</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+                        <form id="settingsForm">
+                        <div class="space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Site Ayarları</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Site Başlığı</label>
+                                            <input type="text" id="siteTitle" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Site Açıklaması</label>
+                                            <input type="text" id="siteTagline" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Site Tanıtım Metni</label>
+                                            <textarea id="siteDescription" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Hesap Ayarları</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kullanıcı Adı</label>
+                                            <input type="text" id="username" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">E-posta</label>
+                                            <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                        </div>
+                                        <div class="col-span-2">
+                                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Yeni Şifre (Boş bırakırsanız değişmez)</label>
+                                            <input type="password" id="password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="pt-4 border-t">
+                                    <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md hover:bg-secondary transition-colors">
+                                    <i class="fas fa-save mr-2"></i>Ayarları Kaydet
+                                </button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let authToken = localStorage.getItem('authToken');
+        let currentUser = null;
+        let isDarkMode = localStorage.getItem('isDarkMode') === 'true';
+
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const submitButton = this.querySelector('button[type="submit"]');
+            const loginError = document.getElementById('loginError');
+            const loginErrorMessage = document.getElementById('loginErrorMessage');
+            
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Giriş yapılıyor...';
+            loginError.classList.add('hidden');
+            loginErrorMessage.textContent = 'Kullanıcı adı veya şifre yanlış!';
+            
+            try {
+                                 const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Store token and user data
+                    authToken = result.data.access_token;
+                    currentUser = result.data.user;
+                    localStorage.setItem('authToken', authToken);
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    localStorage.setItem('isDarkMode', isDarkMode); // Save theme preference
+                    
+                    // Hide login page and show dashboard
+                    document.getElementById('loginPage').classList.add('hidden');
+                    document.getElementById('adminPanel').classList.remove('hidden');
+                    
+                    // Load dashboard data
+                    loadDashboardStats();
+                } else {
+                    loginError.classList.remove('hidden');
+                    setTimeout(() => {
+                        loginError.classList.add('hidden');
+                    }, 3000);
+                }
+            } catch (error) {
+                loginError.classList.remove('hidden');
+                setTimeout(() => {
+                    loginError.classList.add('hidden');
+                }, 3000);
+            } finally {
+                // Reset button
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Giriş Yap';
+            }
+        });
+
+        // Logout functionality
+        function logout() {
+            authToken = null;
+            currentUser = null;
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('isDarkMode'); // Clear theme preference on logout
+            
+            document.getElementById('adminPanel').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('loginForm').reset();
+        }
+
+        // API Helper function
+        async function apiRequest(endpoint, options = {}) {
+            const url = `/api${endpoint}`;
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(authToken && { 'Authorization': `Bearer ${authToken}` })
+                },
+                ...options
+            };
+
+            try {
+                const response = await fetch(url, config);
+                const result = await response.json();
+                
+                if (response.status === 401) {
+                    logout();
+                    return null;
+                }
+                
+                return result;
+            } catch (error) {
+                console.error('API Error:', error);
+                return null;
+            }
+        }
+
+        // Load dashboard statistics
+        async function loadDashboardStats() {
+            const stats = await apiRequest('/dashboard/stats');
+            if (stats && stats.success) {
+                const data = stats.data;
+                updateDashboardStats(data);
+            }
+        }
+
+        // Update dashboard stats UI
+        function updateDashboardStats(data) {
+            const statsElements = document.querySelectorAll('[data-stat]');
+            statsElements.forEach(element => {
+                const statType = element.getAttribute('data-stat');
+                if (data[statType] !== undefined) {
+                    element.textContent = data[statType];
+                }
+            });
+            
+            // Update unread messages badge
+            const unreadBadge = document.getElementById('unreadMessagesBadge');
+            if (data.unread_messages && data.unread_messages > 0) {
+                unreadBadge.textContent = data.unread_messages;
+                unreadBadge.classList.remove('hidden');
+            } else {
+                unreadBadge.classList.add('hidden');
+            }
+            
+            // Update newsletter subscribers badge
+            const newsletterBadge = document.getElementById('newsletterSubscribersBadge');
+            if (data.newsletter_subscribers && data.newsletter_subscribers > 0) {
+                newsletterBadge.textContent = data.newsletter_subscribers;
+                newsletterBadge.classList.remove('hidden');
+            } else {
+                newsletterBadge.classList.add('hidden');
+            }
+        }
+
+        // Refresh dashboard stats automatically
+        function refreshDashboardStats() {
+            loadDashboardStats();
+        }
+
+        // Section navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            targetSection.classList.remove('hidden');
+            targetSection.classList.add('active');
+            
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Find and activate the correct nav link
+            const activeLink = document.querySelector(`a[onclick="showSection('${sectionId}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Load section-specific data
+            switch(sectionId) {
+                case 'messages':
+                    loadMessages();
+                    loadDashboardStats(); // Refresh stats when messages section is opened
+                    break;
+                case 'posts':
+                    loadPosts();
+                    break;
+                case 'projects':
+                    loadProjects();
+                    break;
+                case 'settings':
+                    loadSettings();
+                    break;
+                case 'comingsoon':
+                    loadComingSoonPosts();
+                    break;
+                case 'newsletter':
+                    loadNewsletterSubscribers();
+                    break;
+                case 'dashboard':
+                    loadDashboardStats();
+                    break;
+            }
+        }
+
+        // Load posts
+        async function loadPosts() {
+            const posts = await apiRequest('/admin/posts');
+            if (posts && posts.success) {
+                updatePostsUI(posts.data.posts);
+            }
+        }
+
+        // Update view count in admin posts table
+        function updateAdminPostViewCount(postId, newViewCount) {
+            const viewCountElement = document.querySelector(`.view-count-${postId}`);
+            if (viewCountElement) {
+                viewCountElement.textContent = newViewCount;
+                console.log(`ADMIN: Updated view count for post ${postId} to ${newViewCount}`);
+            }
+        }
+
+        // Check for view count updates from other pages (admin specific)
+        function checkAdminViewCountUpdates() {
+            const updateInfo = localStorage.getItem('viewCountUpdated');
+            if (updateInfo) {
+                try {
+                    const data = JSON.parse(updateInfo);
+                    // Check if update is recent (within last 5 minutes)
+                    if (Date.now() - data.timestamp < 300000) {
+                        // If we have the specific view count, update it directly
+                        if (data.postId && data.viewCount !== null && data.viewCount !== undefined) {
+                            console.log(`ADMIN: Direct update: post ${data.postId} to ${data.viewCount}`);
+                            updateAdminPostViewCount(data.postId, data.viewCount);
+                        } else {
+                            // Fallback to refreshing all posts
+                            console.log('ADMIN: Fallback to refreshing all posts');
+                            if (document.getElementById('posts').classList.contains('active')) {
+                                loadPosts();
+                            }
+                        }
+                    }
+                    // Don't remove the flag here, let other pages handle it
+                } catch (error) {
+                    console.error('Error parsing view count update info:', error);
+                }
+            }
+        }
+
+        // Update posts UI
+        function updatePostsUI(posts) {
+            const postsTable = document.getElementById('postsTable');
+            postsTable.innerHTML = '';
+            
+            if (posts.length === 0) {
+                postsTable.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-8">
+                            <p class="text-gray-500 dark:text-gray-400">Henüz yazı bulunmuyor.</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            posts.forEach(post => {
+                const statusClass = getStatusClass(post.status);
+                const statusText = getStatusText(post.status);
+                const row = document.createElement('tr');
+                row.className = 'border-b hover:bg-gray-50 dark:hover:bg-gray-700';
+                row.innerHTML = `
+                    <td class="py-3 px-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-file-alt text-blue-500 mr-3"></i>
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">${post.title}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">${post.excerpt || 'Açıklama yok'}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <span class="${statusClass}">${statusText}</span>
+                    </td>
+                    <td class="py-3 px-4 text-gray-600 dark:text-gray-400">
+                        <span class="view-count-${post.id}">${post.view_count || 0}</span>
+                        <i class="fas fa-eye ml-1 text-gray-400"></i>
+                    </td>
+                    <td class="py-3 px-4 text-gray-600 dark:text-gray-400">
+                        ${new Date(post.created_at).toLocaleDateString('tr-TR')}
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="flex space-x-2">
+                            <button onclick="editPost(${post.id})" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400" title="Düzenle">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deletePost(${post.id})" class="text-red-500 hover:text-red-700 dark:hover:text-red-400" title="Sil">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                postsTable.appendChild(row);
+            });
+        }
+
+        // Get status class for badges
+        function getStatusClass(status) {
+            switch(status) {
+                case 'published':
+                    return 'bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full dark:bg-green-900 dark:text-green-300';
+                case 'draft':
+                    return 'bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full dark:bg-yellow-900 dark:text-yellow-300';
+                case 'inactive':
+                    return 'bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full dark:bg-gray-900 dark:text-gray-300';
+                default:
+                    return 'bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full dark:bg-gray-900 dark:text-gray-300';
+            }
+        }
+
+        // Get status text
+        function getStatusText(status) {
+            switch(status) {
+                case 'published':
+                    return 'Yayınlandı';
+                case 'draft':
+                    return 'Taslak';
+                case 'inactive':
+                    return 'Pasif';
+                default:
+                    return 'Bilinmeyen';
+            }
+        }
+
+        // Show new post form
+        function showNewPostForm() {
+            document.getElementById('postFormTitle').textContent = 'Yeni Yazı Ekle';
+            document.getElementById('postForm').reset();
+            document.getElementById('postId').value = '';
+            document.getElementById('postFormContainer').classList.remove('hidden');
+            document.getElementById('postsListContainer').classList.add('hidden');
+            
+            // Auto-generate slug when title changes
+            document.getElementById('postTitle').addEventListener('input', function() {
+                const title = this.value;
+                const slug = title.toLowerCase()
+                    .replace(/[^\w\s-]/g, '') // Remove special characters
+                    .replace(/\s+/g, '-') // Replace spaces with hyphens
+                    .replace(/--+/g, '-') // Replace multiple hyphens with single
+                    .trim();
+                document.getElementById('postSlug').value = slug;
+            });
+        }
+
+        // Hide post form
+        function hidePostForm() {
+            document.getElementById('postFormContainer').classList.add('hidden');
+            document.getElementById('postsListContainer').classList.remove('hidden');
+        }
+
+        // Edit post
+        async function editPost(postId) {
+            const post = await apiRequest(`/admin/posts/${postId}`);
+            if (post && post.success) {
+                const postData = post.data;
+                
+                // Fill form with post data
+                document.getElementById('postFormTitle').textContent = 'Yazıyı Düzenle';
+                document.getElementById('postId').value = postData.id;
+                document.getElementById('postTitle').value = postData.title;
+                document.getElementById('postSlug').value = postData.slug;
+                document.getElementById('postExcerpt').value = postData.excerpt || '';
+                document.getElementById('postContent').value = postData.content;
+                document.getElementById('postStatus').value = postData.status;
+                document.getElementById('postCategory').value = postData.category || '';
+                document.getElementById('postTags').value = postData.tags || '';
+                document.getElementById('postImage').value = postData.image_url || '';
+                
+                // Show form
+                document.getElementById('postFormContainer').classList.remove('hidden');
+                document.getElementById('postsListContainer').classList.add('hidden');
+            }
+        }
+
+        // Delete post
+        async function deletePost(postId) {
+            if (confirm('Bu yazıyı silmek istediğinizden emin misiniz?')) {
+                const result = await apiRequest(`/admin/posts/${postId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (result && result.success) {
+                    loadPosts();
+                    loadDashboardStats();
+                    alert('Yazı başarıyla silindi!');
+                } else {
+                    alert('Yazı silinirken hata oluştu!');
+                }
+            }
+        }
+
+        // Post form submit handler
+        function setupPostFormHandler() {
+            const postForm = document.getElementById('postForm');
+            if (postForm) {
+                postForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const postData = {
+                        title: formData.get('title'),
+                        slug: formData.get('slug'),
+                        excerpt: formData.get('excerpt'),
+                        content: formData.get('content'),
+                        status: formData.get('status'),
+                        category: formData.get('category'),
+                        tags: formData.get('tags'),
+                        image_url: formData.get('image_url')
+                    };
+                    
+                    const postId = formData.get('id');
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    
+                    // Show loading state
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Kaydediliyor...';
+                    
+                    try {
+                        let result;
+                        if (postId) {
+                            // Update existing post
+                            result = await apiRequest(`/admin/posts/${postId}`, {
+                                method: 'PUT',
+                                body: JSON.stringify(postData)
+                            });
+                        } else {
+                            // Create new post
+                            result = await apiRequest('/admin/posts', {
+                                method: 'POST',
+                                body: JSON.stringify(postData)
+                            });
+                        }
+                        
+                        if (result && result.success) {
+                            hidePostForm();
+                            loadPosts();
+                            loadDashboardStats();
+                            alert(postId ? 'Yazı başarıyla güncellendi!' : 'Yazı başarıyla eklendi!');
+                        } else {
+                            alert('Yazı kaydedilirken hata oluştu!');
+                        }
+                    } catch (error) {
+                        console.error('Post save error:', error);
+                        alert('Yazı kaydedilirken hata oluştu!');
+                    } finally {
+                        // Reset button
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = '<i class="fas fa-save mr-2"></i>Kaydet';
+                    }
+                });
+            }
+        }
+
+        // Load projects
+        async function loadProjects() {
+            const projects = await apiRequest('/admin/projects');
+            if (projects && projects.success) {
+                updateProjectsUI(projects.data.projects);
+            }
+        }
+
+        // Update projects UI
+        function updateProjectsUI(projects) {
+            const projectsGrid = document.getElementById('projectsGrid');
+            projectsGrid.innerHTML = '';
+            
+            if (projects.length === 0) {
+                projectsGrid.innerHTML = `
+                    <div class="col-span-full flex items-center justify-center bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+                        <div class="text-center">
+                            <i class="fas fa-project-diagram text-gray-400 text-4xl mb-4"></i>
+                            <p class="text-gray-500 dark:text-gray-400">Henüz proje bulunmuyor.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            projects.forEach(project => {
+                const projectCard = createProjectCard(project);
+                projectsGrid.appendChild(projectCard);
+            });
+        }
+
+        // Create project card
+        function createProjectCard(project) {
+            const card = document.createElement('div');
+            card.className = 'bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700';
+            
+            const statusClass = getProjectStatusClass(project.status);
+            const statusText = getProjectStatusText(project.status);
+            const technologies = parseProjectTechnologies(project.technologies);
+            
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">${project.title}</h3>
+                    <span class="${statusClass}">${statusText}</span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">${project.description}</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    ${technologies.map(tech => `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded dark:bg-blue-900 dark:text-blue-300">${tech}</span>`).join('')}
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <button onclick="editProject(${project.id})" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400" title="Düzenle">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteProject(${project.id})" class="text-red-500 hover:text-red-700 dark:hover:text-red-400" title="Sil">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="flex space-x-2">
+                        ${project.github_url ? `<a href="${project.github_url}" target="_blank" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300" title="GitHub"><i class="fab fa-github"></i></a>` : ''}
+                        ${project.demo_url ? `<a href="${project.demo_url}" target="_blank" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300" title="Demo"><i class="fas fa-external-link-alt"></i></a>` : ''}
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Get project status class
+        function getProjectStatusClass(status) {
+            switch(status) {
+                case 'active':
+                    return 'bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full dark:bg-green-900 dark:text-green-300';
+                case 'completed':
+                    return 'bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300';
+                case 'archived':
+                    return 'bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full dark:bg-gray-900 dark:text-gray-300';
+                default:
+                    return 'bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full dark:bg-gray-900 dark:text-gray-300';
+            }
+        }
+
+        // Get project status text
+        function getProjectStatusText(status) {
+            switch(status) {
+                case 'active':
+                    return 'Aktif';
+                case 'completed':
+                    return 'Tamamlandı';
+                case 'archived':
+                    return 'Arşivlendi';
+                default:
+                    return 'Bilinmiyor';
+            }
+        }
+
+        // Parse project technologies
+        function parseProjectTechnologies(technologies) {
+            try {
+                return JSON.parse(technologies || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // Show new project form
+        function showNewProjectForm() {
+            document.getElementById('projectFormTitle').textContent = 'Yeni Proje';
+            document.getElementById('projectFormElement').reset();
+            document.getElementById('projectFormElement').removeAttribute('data-project-id');
+            document.getElementById('projectForm').classList.remove('hidden');
+        }
+
+        // Hide project form
+        function hideProjectForm() {
+            document.getElementById('projectForm').classList.add('hidden');
+        }
+
+        // Edit project
+        async function editProject(id) {
+            const project = await apiRequest(`/admin/projects/${id}`);
+            if (project && project.success) {
+                const projectData = project.data;
+                
+                document.getElementById('projectFormTitle').textContent = 'Proje Düzenle';
+                document.getElementById('projectTitle').value = projectData.title;
+                document.getElementById('projectDescription').value = projectData.description;
+                document.getElementById('projectContent').value = projectData.content;
+                document.getElementById('projectStatus').value = projectData.status;
+                document.getElementById('projectGithubUrl').value = projectData.github_url || '';
+                document.getElementById('projectDemoUrl').value = projectData.demo_url || '';
+                document.getElementById('projectImageUrl').value = projectData.image_url || '';
+                document.getElementById('projectTechnologies').value = projectData.technologies || '';
+                
+                document.getElementById('projectFormElement').setAttribute('data-project-id', id);
+                document.getElementById('projectForm').classList.remove('hidden');
+            }
+        }
+
+        // Delete project
+        async function deleteProject(id) {
+            if (confirm('Bu projeyi silmek istediğinizden emin misiniz?')) {
+                const result = await apiRequest(`/admin/projects/${id}`, { method: 'DELETE' });
+                if (result && result.success) {
+                    loadProjects();
+                    loadDashboardStats();
+                    alert('Proje başarıyla silindi!');
+                } else {
+                    alert('Proje silinirken hata oluştu!');
+                }
+            }
+        }
+
+        // Initialize project form
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectForm = document.getElementById('projectFormElement');
+            if (projectForm) {
+                projectForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const projectId = this.getAttribute('data-project-id');
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    
+                    // Disable button
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Kaydediliyor...';
+                    
+                    const projectData = {
+                        title: document.getElementById('projectTitle').value,
+                        description: document.getElementById('projectDescription').value,
+                        content: document.getElementById('projectContent').value,
+                        status: document.getElementById('projectStatus').value,
+                        github_url: document.getElementById('projectGithubUrl').value,
+                        demo_url: document.getElementById('projectDemoUrl').value,
+                        image_url: document.getElementById('projectImageUrl').value,
+                        technologies: document.getElementById('projectTechnologies').value
+                    };
+                    
+                    try {
+                        let result;
+                        if (projectId) {
+                            // Update existing project
+                            result = await apiRequest(`/admin/projects/${projectId}`, {
+                                method: 'PUT',
+                                body: JSON.stringify(projectData)
+                            });
+                        } else {
+                            // Create new project
+                            result = await apiRequest('/admin/projects', {
+                                method: 'POST',
+                                body: JSON.stringify(projectData)
+                            });
+                        }
+                        
+                        if (result && result.success) {
+                            hideProjectForm();
+                            loadProjects();
+                            loadDashboardStats();
+                            alert(projectId ? 'Proje başarıyla güncellendi!' : 'Proje başarıyla eklendi!');
+                        } else {
+                            alert('Proje kaydedilirken hata oluştu!');
+                        }
+                    } catch (error) {
+                        console.error('Project save error:', error);
+                        alert('Proje kaydedilirken hata oluştu!');
+                    } finally {
+                        // Reset button
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = '<i class="fas fa-save mr-2"></i>Kaydet';
+                    }
+                });
+            }
+        });
+
+        // Load messages
+        async function loadMessages() {
+            const messages = await apiRequest('/admin/messages');
+            if (messages && messages.success) {
+                updateMessagesUI(messages.data.messages);
+                // Refresh dashboard stats after loading messages
+                loadDashboardStats();
+            }
+        }
+
+        // Update messages UI
+        function updateMessagesUI(messages) {
+            const messagesContainer = document.querySelector('#messages .space-y-4');
+            messagesContainer.innerHTML = '';
+            
+            if (messages.length === 0) {
+                messagesContainer.innerHTML = '<p class="text-gray-500 dark:text-gray-400 text-center py-8">Henüz mesaj bulunmuyor.</p>';
+                return;
+            }
+            
+            messages.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `border-l-4 ${message.is_read ? 'border-gray-400 bg-gray-50 dark:bg-gray-700' : 'border-blue-500 bg-blue-50 dark:bg-blue-900'} p-4 rounded-r-lg`;
+                messageDiv.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <h4 class="font-semibold text-gray-900 dark:text-white">${message.name}</h4>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">${new Date(message.created_at).toLocaleDateString('tr-TR')}</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 mb-2">${message.email}</p>
+                    <p class="text-gray-800 dark:text-gray-200"><strong>Konu:</strong> ${message.subject}</p>
+                    <p class="text-gray-700 dark:text-gray-300 mt-2">${message.message}</p>
+                    <div class="mt-3 flex space-x-2">
+                        <button onclick="markAsRead(${message.id})" class="bg-gray-500 text-white px-3 py-1 rounded text-sm hover:bg-gray-600 dark:hover:bg-gray-600">
+                            ${message.is_read ? 'Okundu' : 'Okundu İşaretle'}
+                        </button>
+                        <button onclick="deleteMessage(${message.id})" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 dark:hover:bg-red-600">
+                            Sil
+                        </button>
+                    </div>
+                `;
+                messagesContainer.appendChild(messageDiv);
+            });
+        }
+
+        // Mark message as read
+        async function markAsRead(messageId) {
+            const result = await apiRequest(`/admin/messages/${messageId}`, {
+                method: 'PUT',
+                body: JSON.stringify({ is_read: true })
+            });
+            
+            if (result && result.success) {
+                loadMessages();
+                loadDashboardStats();
+            }
+        }
+
+        // Delete message
+        async function deleteMessage(messageId) {
+            if (confirm('Bu mesajı silmek istediğinizden emin misiniz?')) {
+                const result = await apiRequest(`/admin/messages/${messageId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (result && result.success) {
+                    loadMessages();
+                    loadDashboardStats();
+                }
+            }
+        }
+
+        // Settings functions
+        async function loadSettings() {
+            try {
+                // Load site settings
+                const settings = await apiRequest('/settings');
+                if (settings && settings.success) {
+                    updateSettingsForm(settings.data);
+                }
+                
+                // Load user profile
+                const profile = await apiRequest('/user/profile');
+                if (profile && profile.success) {
+                    updateProfileForm(profile.data);
+                } else {
+                    console.error('Failed to load user profile:', profile);
+                    alert('Kullanıcı profili yüklenemedi. Lütfen çıkış yapıp tekrar giriş yapın.');
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('currentUser');
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+                alert('Ayarlar yüklenirken hata oluştu. Lütfen çıkış yapıp tekrar giriş yapın.');
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            }
+        }
+
+        function updateSettingsForm(settings) {
+            document.getElementById('siteTitle').value = settings.site_title || '';
+            document.getElementById('siteTagline').value = settings.site_tagline || '';
+            document.getElementById('siteDescription').value = settings.site_description || '';
+        }
+
+        function updateProfileForm(profile) {
+            document.getElementById('username').value = profile.username || '';
+            document.getElementById('email').value = profile.email || '';
+            document.getElementById('password').value = '';
+        }
+
+        // Save settings
+        async function saveSettings(event) {
+            event.preventDefault();
+            
+            const siteTitle = document.getElementById('siteTitle').value;
+            const siteTagline = document.getElementById('siteTagline').value;
+            const siteDescription = document.getElementById('siteDescription').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                // Update site settings
+                const settingsData = {
+                    site_title: siteTitle,
+                    site_tagline: siteTagline,
+                    site_description: siteDescription
+                };
+                
+                const settingsResult = await apiRequest('/admin/settings', {
+                    method: 'PUT',
+                    body: JSON.stringify(settingsData)
+                });
+                
+                // Update user profile
+                const profileData = {
+                    username: username,
+                    email: email
+                };
+                
+                if (password) {
+                    profileData.password = password;
+                }
+                
+                const profileResult = await apiRequest('/user/profile', {
+                    method: 'PUT',
+                    body: JSON.stringify(profileData)
+                });
+                
+                if (settingsResult && settingsResult.success && profileResult && profileResult.success) {
+                    alert('Ayarlar başarıyla güncellendi!');
+                    document.getElementById('password').value = ''; // Clear password field
+                } else {
+                    // More specific error handling
+                    if (settingsResult && !settingsResult.success) {
+                        alert('Site ayarları güncellenirken hata: ' + settingsResult.message);
+                    }
+                    if (profileResult && !profileResult.success) {
+                        alert('Profil güncellenirken hata: ' + profileResult.message);
+                    }
+                    if (!settingsResult || !profileResult) {
+                        alert('Kimlik doğrulama hatası. Lütfen çıkış yapıp tekrar giriş yapın.');
+                        // Clear localStorage and redirect to login
+                        localStorage.removeItem('authToken');
+                        localStorage.removeItem('currentUser');
+                        window.location.reload();
+                    }
+                }
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                alert('Ayarlar kaydedilirken bir hata oluştu. Lütfen çıkış yapıp tekrar giriş yapın.');
+                // Clear localStorage and redirect to login
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            }
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Çıkış yapmak istediğinizden emin misiniz?')) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('currentUser');
+                window.location.reload();
+            }
+        }
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('isDarkMode', isDarkMode);
+            
+            if (isDarkMode) {
+                htmlElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                htmlElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        // Add event listener for theme toggle
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
+        }
+
+        // Update view count dynamically
+        function updateViewCount(postId, newCount) {
+            const viewCountElements = document.querySelectorAll(`.view-count-${postId}`);
+            viewCountElements.forEach(element => {
+                element.textContent = newCount;
+            });
+        }
+
+        // Refresh view counts for all posts
+        async function refreshViewCounts() {
+            console.log('ADMIN: refreshViewCounts called');
+            try {
+                const response = await apiRequest('/admin/posts');
+                console.log('ADMIN: API response:', response);
+                if (response && response.success) {
+                    const posts = response.data.posts || [];
+                    console.log('ADMIN: Posts from API:', posts);
+                    posts.forEach(post => {
+                        console.log(`ADMIN: Updating view count for post ${post.id}: ${post.view_count}`);
+                        updateViewCount(post.id, post.view_count || 0);
+                    });
+                    
+                    // Also refresh dashboard stats when view counts change
+                    refreshDashboardStats();
+                }
+            } catch (error) {
+                console.error('ADMIN: Error refreshing view counts:', error);
+            }
+        }
+
+        // Check for view count updates from other pages
+        function checkViewCountUpdates() {
+            const updateInfo = localStorage.getItem('viewCountUpdated');
+            console.log('ADMIN: checkViewCountUpdates called, updateInfo:', updateInfo);
+            if (updateInfo) {
+                try {
+                    const data = JSON.parse(updateInfo);
+                    console.log('ADMIN: Parsed update info:', data);
+                    // Check if update is recent (within last 5 minutes)
+                    if (Date.now() - data.timestamp < 300000) {
+                        console.log('ADMIN: Update is recent, refreshing view counts');
+                        refreshViewCounts();
+                    } else {
+                        console.log('ADMIN: Update is too old, ignoring');
+                    }
+                    // Clean up the flag
+                    localStorage.removeItem('viewCountUpdated');
+                } catch (error) {
+                    console.error('ADMIN: Error parsing view count update info:', error);
+                    localStorage.removeItem('viewCountUpdated');
+                }
+            }
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            if (authToken) {
+                currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                loadDashboardStats();
+                
+                // Check for view count updates immediately
+                checkViewCountUpdates();
+                
+                // Refresh view counts every 30 seconds
+                setInterval(refreshViewCounts, 30000);
+                
+                // Check for view count updates every 5 seconds
+                setInterval(checkViewCountUpdates, 5000);
+                
+                // Refresh dashboard stats every 45 seconds
+                setInterval(refreshDashboardStats, 45000);
+                
+                // Refresh view counts when page becomes visible
+                document.addEventListener('visibilitychange', function() {
+                    if (!document.hidden) {
+                        checkViewCountUpdates();
+                        refreshViewCounts();
+                    }
+                });
+                
+                // Refresh view counts when page gains focus
+                window.addEventListener('focus', function() {
+                    checkViewCountUpdates();
+                    refreshViewCounts();
+                });
+            }
+
+            // Add settings form event listener
+            const settingsForm = document.getElementById('settingsForm');
+            if (settingsForm) {
+                settingsForm.addEventListener('submit', saveSettings);
+            }
+
+            // Apply saved theme
+            if (isDarkMode) {
+                htmlElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+            
+            // Setup post form handler
+            setupPostFormHandler();
+            
+            // Setup coming soon form handler
+            setupComingSoonFormHandler();
+        });
+        
+        // Coming Soon Management Functions
+        async function loadComingSoonPosts() {
+            try {
+                const result = await apiRequest('/admin/comingsoon');
+                if (result && result.success) {
+                    displayComingSoonPosts(result.data);
+                } else {
+                    console.error('Failed to load coming soon posts:', result?.message);
+                }
+            } catch (error) {
+                console.error('Error loading coming soon posts:', error);
+            }
+        }
+        
+        function displayComingSoonPosts(posts) {
+            const container = document.getElementById('comingSoonPosts');
+            
+            if (!posts || posts.length === 0) {
+                container.innerHTML = '<div class="text-center py-8 text-gray-500 dark:text-gray-400">Henüz yakında gelecek yazı bulunmuyor.</div>';
+                return;
+            }
+            
+            container.innerHTML = posts.map(post => `
+                <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-700">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 dark:text-white">${post.title}</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${post.description}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editComingSoonPost(${post.id})" class="px-2 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button onclick="deleteComingSoonPost(${post.id})" class="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        <span class="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">${post.category}</span>
+                        <span class="px-2 py-1 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded">${getStatusText(post.status)}</span>
+                        <span class="px-2 py-1 text-xs bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 rounded">Öncelik: ${post.priority}</span>
+                        ${post.estimated_date ? `<span class="px-2 py-1 text-xs bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 rounded">${formatDate(post.estimated_date)}</span>` : ''}
+                    </div>
+                    ${post.tags ? `<div class="text-xs text-gray-500 dark:text-gray-400"><i class="fas fa-tags mr-1"></i>${post.tags}</div>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        function getStatusText(status) {
+            switch(status) {
+                case 'planned': return 'Planlandı';
+                case 'in_progress': return 'Devam Ediyor';
+                case 'completed': return 'Tamamlandı';
+                default: return status;
+            }
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('tr-TR');
+        }
+        
+        function setupComingSoonFormHandler() {
+            const form = document.getElementById('comingSoonForm');
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    console.log('Form submitted');
+                    
+                    const formData = new FormData(form);
+                    const data = {
+                        title: formData.get('title'),
+                        description: formData.get('description'),
+                        category: formData.get('category'),
+                        tags: formData.get('tags'),
+                        status: formData.get('status'),
+                        priority: parseInt(formData.get('priority')),
+                        estimated_date: formData.get('estimated_date') ? new Date(formData.get('estimated_date')).toISOString() : null
+                    };
+                    
+                    console.log('Form data:', data);
+                    
+                    try {
+                        const editId = form.getAttribute('data-edit-id');
+                        let result;
+                        
+                        if (editId) {
+                            // Update existing post
+                            console.log('Updating post with ID:', editId);
+                            result = await apiRequest(`/admin/comingsoon/${editId}`, {
+                                method: 'PUT',
+                                body: JSON.stringify(data)
+                            });
+                        } else {
+                            // Create new post
+                            console.log('Creating new post');
+                            result = await apiRequest('/admin/comingsoon', {
+                                method: 'POST',
+                                body: JSON.stringify(data)
+                            });
+                        }
+                        
+                        console.log('API response:', result);
+                        
+                        if (result && result.success) {
+                            alert(editId ? 'Yakında gelecek yazı başarıyla güncellendi!' : 'Yakında gelecek yazı başarıyla eklendi!');
+                            form.reset();
+                            form.removeAttribute('data-edit-id');
+                            form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-plus mr-2"></i>Ekle';
+                            loadComingSoonPosts();
+                        } else {
+                            console.error('API error:', result);
+                            alert('Hata: ' + (result?.message || 'Bilinmeyen hata'));
+                        }
+                    } catch (error) {
+                        console.error('Error saving coming soon post:', error);
+                        alert('Yakında gelecek yazı kaydedilirken bir hata oluştu: ' + error.message);
+                    }
+                });
+            } else {
+                console.error('Coming soon form not found');
+            }
+        }
+        
+        async function editComingSoonPost(id) {
+            try {
+                const result = await apiRequest(`/admin/comingsoon/${id}`);
+                if (result && result.success) {
+                    const post = result.data;
+                    
+                    // Fill form with existing data
+                    document.getElementById('comingSoonTitle').value = post.title;
+                    document.getElementById('comingSoonDescription').value = post.description;
+                    document.getElementById('comingSoonCategory').value = post.category;
+                    document.getElementById('comingSoonTags').value = post.tags || '';
+                    document.getElementById('comingSoonStatus').value = post.status;
+                    document.getElementById('comingSoonPriority').value = post.priority;
+                    
+                    if (post.estimated_date) {
+                        const date = new Date(post.estimated_date);
+                        document.getElementById('comingSoonDate').value = date.toISOString().split('T')[0];
+                    }
+                    
+                    // Change form to edit mode
+                    const form = document.getElementById('comingSoonForm');
+                    form.setAttribute('data-edit-id', id);
+                    form.querySelector('button[type="submit"]').innerHTML = '<i class="fas fa-save mr-2"></i>Güncelle';
+                } else {
+                    alert('Yakında gelecek yazı bulunamadı.');
+                }
+            } catch (error) {
+                console.error('Error fetching coming soon post:', error);
+                alert('Yakında gelecek yazı yüklenirken bir hata oluştu.');
+            }
+        }
+        
+        async function deleteComingSoonPost(id) {
+            if (confirm('Bu yakında gelecek yazıyı silmek istediğinizden emin misiniz?')) {
+                try {
+                    const result = await apiRequest(`/admin/comingsoon/${id}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (result && result.success) {
+                        alert('Yakında gelecek yazı başarıyla silindi!');
+                        loadComingSoonPosts();
+                    } else {
+                        alert('Hata: ' + (result?.message || 'Bilinmeyen hata'));
+                    }
+                } catch (error) {
+                    console.error('Error deleting coming soon post:', error);
+                    alert('Yakında gelecek yazı silinirken bir hata oluştu.');
+                }
+            }
+        }
+
+        // Newsletter management functions
+        async function loadNewsletterSubscribers() {
+            const search = document.getElementById('newsletterSearch').value;
+            const params = new URLSearchParams();
+            if (search) params.append('search', search);
+            
+            const result = await apiRequest(`/admin/newsletter?${params.toString()}`);
+            if (result && result.success) {
+                updateNewsletterSubscribersUI(result.data.subscriptions);
+                updateNewsletterStats(result.data);
+                updateNewsletterPagination(result.data);
+            }
+        }
+
+        function updateNewsletterSubscribersUI(subscribers) {
+            const tableBody = document.getElementById('newsletterSubscribersTable');
+            tableBody.innerHTML = '';
+            
+            if (subscribers.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
+                            <i class="fas fa-envelope-open text-4xl mb-4 opacity-50"></i>
+                            <p>Henüz newsletter abonesi bulunmuyor.</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            subscribers.forEach(subscriber => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 dark:hover:bg-gray-700';
+                
+                const statusColor = subscriber.is_active ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400';
+                const statusIcon = subscriber.is_active ? 'fas fa-check-circle' : 'fas fa-times-circle';
+                const statusText = subscriber.is_active ? 'Aktif' : 'Pasif';
+                
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-gray-400 mr-3"></i>
+                            <span class="text-sm font-medium text-gray-900 dark:text-white">${subscriber.email}</span>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="flex items-center ${statusColor}">
+                            <i class="${statusIcon} mr-2"></i>
+                            ${statusText}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        ${new Date(subscriber.created_at).toLocaleDateString('tr-TR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        })}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        <button onclick="deleteNewsletterSubscriber(${subscriber.id})" 
+                                class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 transition-colors">
+                            <i class="fas fa-trash mr-1"></i>Sil
+                        </button>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updateNewsletterStats(data) {
+            document.getElementById('totalSubscribers').textContent = data.total || 0;
+            
+            // Count active subscribers
+            const activeCount = data.subscriptions ? data.subscriptions.filter(s => s.is_active).length : 0;
+            document.getElementById('activeSubscribers').textContent = activeCount;
+            
+            // Count this week's subscribers (simplified - would need backend calculation for accuracy)
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+            const weeklyCount = data.subscriptions ? data.subscriptions.filter(s => 
+                new Date(s.created_at) >= oneWeekAgo
+            ).length : 0;
+            document.getElementById('weeklySubscribers').textContent = weeklyCount;
+            
+            // Update navigation badge
+            const badge = document.getElementById('newsletterSubscribersBadge');
+            if (data.total > 0) {
+                badge.textContent = data.total;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        function updateNewsletterPagination(data) {
+            const paginationContainer = document.getElementById('newsletterPagination');
+            if (data.total_pages <= 1) {
+                paginationContainer.innerHTML = '';
+                return;
+            }
+            
+            paginationContainer.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-700 dark:text-gray-300">
+                        Toplam ${data.total} abone
+                    </div>
+                    <div class="flex space-x-2">
+                        ${data.page > 1 ? `<button onclick="loadNewsletterSubscribers(${data.page - 1})" class="px-3 py-2 text-sm bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600">Önceki</button>` : ''}
+                        <span class="px-3 py-2 text-sm bg-primary text-white rounded-md">${data.page}</span>
+                        ${data.page < data.total_pages ? `<button onclick="loadNewsletterSubscribers(${data.page + 1})" class="px-3 py-2 text-sm bg-gray-200 dark:bg-gray-700 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600">Sonraki</button>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function deleteNewsletterSubscriber(id) {
+            if (!confirm('Bu aboneyi silmek istediğinizden emin misiniz?')) {
+                return;
+            }
+            
+            try {
+                const result = await apiRequest(`/admin/newsletter/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (result && result.success) {
+                    loadNewsletterSubscribers();
+                    showNotification('Abone başarıyla silindi.', 'success');
+                } else {
+                    alert('Hata: ' + (result?.message || 'Bilinmeyen hata'));
+                }
+            } catch (error) {
+                console.error('Error deleting newsletter subscriber:', error);
+                alert('Abone silinirken bir hata oluştu.');
+            }
+        }
+
+        // Add search functionality for newsletter
+        document.getElementById('newsletterSearch').addEventListener('input', debounce(loadNewsletterSubscribers, 300));
+
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            if (authToken) {
+                try {
+                    const userData = JSON.parse(localStorage.getItem('currentUser'));
+                    if (userData) {
+                        currentUser = userData;
+                        document.getElementById('loginPage').classList.add('hidden');
+                        document.getElementById('adminPanel').classList.remove('hidden');
+                        loadDashboardStats();
+                    }
+                } catch (error) {
+                    console.error('Error parsing user data:', error);
+                    logout();
+                }
+            }
+            
+            // Apply dark mode if enabled
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            // Check for view count updates every 2 seconds
+            setInterval(checkAdminViewCountUpdates, 2000);
+            
+            // Refresh dashboard stats every 30 seconds
+            setInterval(() => {
+                if (document.getElementById('dashboard').classList.contains('active')) {
+                    loadDashboardStats();
+                }
+            }, 30000);
+        });
+    </script>
+</body>
+</html> 

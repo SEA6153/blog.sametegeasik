@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Basic SEO Meta Tags -->
+    <title>Yazılar - Samet Ege Aşık | Java Backend Developer Blog</title>
+    <meta name="description" content="Java Backend Developer Samet Ege Aşık'ın yazılım geliştirme, Spring Boot, OAuth2, mikroservis mimarisi ve backend teknolojileri hakkındaki blog yazıları.">
+    <meta name="keywords" content="java blog, spring boot yazıları, oauth2 tutorial, mikroservis mimarisi, backend geliştirme, yazılım geliştirme blog, türkçe java blog, spring framework">
+    <meta name="author" content="Samet Ege Aşık">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sametegeasik.com/yazilar">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sametegeasik.com/yazilar">
+    <meta property="og:title" content="Yazılar - Samet Ege Aşık | Java Backend Developer Blog">
+    <meta property="og:description" content="Java Backend Developer Samet Ege Aşık'ın yazılım geliştirme, Spring Boot, OAuth2, mikroservis mimarisi ve backend teknolojileri hakkındaki blog yazıları.">
+    <meta property="og:image" content="https://sametegeasik.com/sea.jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Samet Ege Aşık">
+    <meta property="og:locale" content="tr_TR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://sametegeasik.com/yazilar">
+    <meta name="twitter:title" content="Yazılar - Samet Ege Aşık | Java Backend Developer Blog">
+    <meta name="twitter:description" content="Java Backend Developer Samet Ege Aşık'ın yazılım geliştirme, Spring Boot, OAuth2, mikroservis mimarisi ve backend teknolojileri hakkındaki blog yazıları.">
+    <meta name="twitter:image" content="https://sametegeasik.com/sea.jpeg">
+    <meta name="twitter:creator" content="@sametegeasik">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Stylesheets -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Blog Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Samet Ege Aşık Blog",
+      "url": "https://sametegeasik.com/yazilar",
+      "description": "Java Backend Developer blog yazıları",
+      "author": {
+        "@type": "Person",
+        "name": "Samet Ege Aşık",
+        "url": "https://sametegeasik.com"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Samet Ege Aşık"
+      },
+      "inLanguage": "tr-TR",
+      "genre": "Technology",
+      "keywords": "Java, Spring Boot, OAuth2, Mikroservis, Backend"
+    }
+    </script>
+    
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Ana Sayfa",
+          "item": "https://sametegeasik.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Yazılar",
+          "item": "https://sametegeasik.com/yazilar"
+        }
+      ]
+    }
+    </script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6366f1',
+                        'secondary': '#8b5cf6',
+                        'accent': '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Theme transition */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* Theme toggle button animation */
+        .theme-toggle {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+        
+        .theme-toggle:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Floating animation for the hourglass */
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="/">
+                            <h1 class="text-2xl font-bold text-primary">
+                                <i class="fas fa-code mr-2"></i>Samet Ege AŞIK
+                            </h1>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Ana Sayfa</a>
+                        <a href="/yazilar" class="text-primary px-3 py-2 rounded-md text-sm font-medium">Yazılar</a>
+                        <a href="/projeler" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Projeler</a>
+                        <a href="/hakkimda" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Hakkımda</a>
+                        <a href="/iletisim" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">İletişim</a>
+                        <!-- Theme Toggle Button -->
+                        <button id="themeToggle" class="theme-toggle text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i id="themeIcon" class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden flex items-center space-x-2">
+                    <!-- Mobile Theme Toggle -->
+                    <button id="mobileThemeToggle" class="theme-toggle text-gray-700 dark:text-gray-300 hover:text-primary p-2 rounded-md">
+                        <i id="mobileThemeIcon" class="fas fa-moon"></i>
+                    </button>
+                    <button class="text-gray-700 dark:text-gray-300 hover:text-primary" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-white dark:bg-gray-800 shadow-lg hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Ana Sayfa</a>
+                <a href="/yazilar" class="block px-3 py-2 text-primary">Yazılar</a>
+                <a href="/projeler" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Projeler</a>
+                <a href="/hakkimda" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Hakkımda</a>
+                <a href="/iletisim" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">İletişim</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="bg-gradient-to-r from-primary to-secondary text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    <i class="fas fa-book-open mr-3"></i>Blog Yazıları
+                </h1>
+                <p class="text-xl text-gray-200">
+                    Java Backend Development, OAuth2, Mikroservis Mimarisi ve Kariyer Deneyimlerim
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Filter Section -->
+    <section class="py-8 bg-white dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="filter-btn bg-primary text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-secondary transition-colors" data-filter="all">
+                    Tümü
+                </button>
+                <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-colors" data-filter="oauth2">
+                    OAuth2
+                </button>
+                <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-colors" data-filter="spring-boot">
+                    Spring Boot
+                </button>
+                <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-colors" data-filter="redis-kafka">
+                    Redis & Kafka
+                </button>
+                <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-colors" data-filter="devops">
+                    DevOps
+                </button>
+                <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-colors" data-filter="kariyer">
+                    Kariyer
+                </button>
+                <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-colors" data-filter="database">
+                    Database
+                </button>
+                <button class="filter-btn bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-colors" data-filter="yakinda">
+                    Yakında
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Grid -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Loading indicator -->
+            <div id="loading" class="text-center py-12">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                <p class="text-gray-600 dark:text-gray-400 mt-4">Yazılar yükleniyor...</p>
+            </div>
+
+            <!-- Articles Grid -->
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" style="display: none;">
+                <!-- Articles will be loaded here dynamically -->
+            </div>
+
+            <!-- Empty state -->
+            <div id="empty-state" class="text-center py-12" style="display: none;">
+                <div class="text-gray-400 dark:text-gray-500">
+                    <i class="fas fa-inbox text-6xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Henüz yazı yok</h3>
+                    <p>Bu kategoride henüz yazı bulunmuyor.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Coming Soon Card (always visible) -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+            <div class="article-card bg-gradient-to-br from-primary to-secondary text-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-105 cursor-pointer" data-category="yakinda">
+                <a href="/yakinda" class="block h-full">
+                    <div class="h-48 relative flex items-center justify-center">
+                        <i class="fas fa-hourglass-half text-6xl floating"></i>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-bold mb-3">
+                            Yakında Gelecek Yazılar
+                        </h3>
+                        <p class="text-gray-200 mb-4">
+                            OAuth2, Redis, PostgreSQL, Kafka, DevOps ve Kariyer konularında hazırladığım yazıları görmek için tıklayın.
+                        </p>
+                        <div class="flex justify-center items-center">
+                            <span class="bg-white bg-opacity-20 text-white px-4 py-2 rounded-full text-sm font-medium">
+                                <i class="fas fa-arrow-right mr-2"></i>Yakında Sayfasına Git
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+            <!-- Coming Soon Notice -->
+            <div class="mt-16 text-center">
+                <div class="bg-gradient-to-r from-primary to-secondary rounded-lg p-8 text-white">
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-hourglass-half mr-2"></i>Yakında Daha Fazla İçerik!
+                    </h3>
+                    <p class="text-lg mb-6">
+                        Şu anda aktif olarak blog yazıları üzerinde çalışıyorum. OAuth2, Redis, Kafka 
+                        ve kariyer değişimi konularında detaylı yazılar yakında yayınlanacak.
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="mailto:blog.sametegeasik@gmail.com" class="bg-white text-primary px-6 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                            <i class="fas fa-envelope mr-2"></i>Güncellemeler için E-posta
+                        </a>
+                        <a href="https://www.linkedin.com/in/samet-ege-asik/" target="_blank" class="border-2 border-white text-white px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-primary transition-colors">
+                            <i class="fab fa-linkedin mr-2"></i>LinkedIn'de Takip Et
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-white dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-lg p-8 text-center">
+                <h2 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                    <i class="fas fa-bell text-primary mr-2"></i>Yeni Yazıları Kaçırma!
+                </h2>
+                <p class="text-xl mb-6 text-gray-600 dark:text-gray-300">
+                    OAuth2, mikroservis mimarisi ve backend geliştirme konularında yeni yazılarımdan haberdar ol.
+                </p>
+                <div class="flex justify-center">
+                    <div class="flex max-w-md">
+                        <input id="newsletterEmail" type="email" placeholder="E-posta adresiniz" onkeypress="if(event.key==='Enter') subscribeNewsletter()" class="flex-1 px-4 py-3 rounded-l-lg text-gray-900 dark:text-white dark:bg-gray-800 focus:outline-none border border-gray-300 dark:border-gray-600">
+                        <button id="newsletterBtn" onclick="subscribeNewsletter()" class="bg-primary hover:bg-secondary px-6 py-3 rounded-r-lg font-semibold text-white transition-colors">
+                            <i class="fas fa-paper-plane mr-2"></i>Abone Ol
+                        </button>
+                    </div>
+                </div>
+                <div id="newsletterMessage" class="mt-4 hidden"></div>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+                    Spam yapmam. Sadece kaliteli içerik paylaşırım. 🚀
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-code mr-2"></i>Samet Ege Aşık
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        Java Backend Developer @ MEB YEĞİTEK. OAuth2, mikroservis mimarisi ve 
+                        modern backend teknolojileri üzerine yazılar.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/in/samet-ege-asik/" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-2xl"></i>
+                        </a>
+                        <a href="mailto:blog.sametegeasik@gmail.com" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fas fa-envelope text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Blog Konuları</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">OAuth2 & SSO</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Spring Boot</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Redis & Kafka</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">DevOps</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Bağlantılar</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Ana Sayfa</a></li>
+                        <li><a href="/yazilar" class="text-gray-400 hover:text-white transition-colors">Yazılar</a></li>
+                        <li><a href="/projeler" class="text-gray-400 hover:text-white transition-colors">Projeler</a></li>
+                        <li><a href="/hakkimda" class="text-gray-400 hover:text-white transition-colors">Hakkımda</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Samet Ege AŞIK. Tüm hakları saklıdır.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let allPosts = [];
+        let currentFilter = 'all';
+
+        // Fetch posts from API
+        async function fetchPosts() {
+            try {
+                const response = await fetch('/api/posts');
+                const data = await response.json();
+                
+                if (data.success) {
+                    allPosts = data.data.posts || [];
+                    renderPosts();
+                } else {
+                    console.error('Error fetching posts:', data.message);
+                    showErrorState();
+                }
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+                showErrorState();
+            }
+        }
+
+        // Render posts to the grid
+        function renderPosts() {
+            const loading = document.getElementById('loading');
+            const articlesGrid = document.getElementById('articles-grid');
+            const emptyState = document.getElementById('empty-state');
+            
+            loading.style.display = 'none';
+            
+            if (allPosts.length === 0) {
+                emptyState.style.display = 'block';
+                articlesGrid.style.display = 'none';
+                return;
+            }
+            
+            articlesGrid.innerHTML = '';
+            
+            allPosts.forEach(post => {
+                const postCard = createPostCard(post);
+                articlesGrid.appendChild(postCard);
+            });
+            
+            articlesGrid.style.display = 'grid';
+            emptyState.style.display = 'none';
+            
+            // Apply current filter after rendering
+            filterArticles();
+        }
+
+        // Create post card HTML
+        function createPostCard(post) {
+            const article = document.createElement('article');
+            article.className = 'article-card bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300';
+            article.setAttribute('data-category', getCategoryFilter(post.categories));
+            
+            // Get categories array
+            const categories = post.categories ? post.categories.split(',').map(cat => cat.trim()) : [];
+            const primaryCategory = categories[0] || 'Genel';
+            
+            // Create content
+            article.innerHTML = `
+                <div class="h-48 bg-gradient-to-br from-primary to-accent relative">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i class="fas fa-file-alt text-white text-6xl"></i>
+                    </div>
+                    <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                        Yayında
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center mb-3">
+                        <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">${primaryCategory}</span>
+                        <span class="text-gray-500 dark:text-gray-400 ml-3 text-sm">${formatDate(post.created_at)}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 hover:text-primary transition-colors">
+                        <a href="/posts/${post.slug}" onclick="handlePostClick(event, ${post.id}, '/posts/${post.slug}')">${post.title}</a>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        ${post.excerpt}
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <a href="/posts/${post.slug}" onclick="handlePostClick(event, ${post.id}, '/posts/${post.slug}')" class="text-primary hover:text-secondary font-medium">
+                            Devamını Oku <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                        <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
+                            <i class="fas fa-eye mr-1"></i>
+                            <span class="view-count-${post.id}">${post.view_count || 0}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return article;
+        }
+
+        // Get category filter name
+        function getCategoryFilter(categories) {
+            if (!categories) return 'all';
+            const cats = categories.toLowerCase();
+            if (cats.includes('spring')) return 'spring-boot';
+            if (cats.includes('database') || cats.includes('postgresql')) return 'database';
+            if (cats.includes('performance') || cats.includes('redis')) return 'performance';
+            if (cats.includes('career') || cats.includes('personal')) return 'career';
+            return 'all';
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('tr-TR', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        // Show error state
+        function showErrorState() {
+            const loading = document.getElementById('loading');
+            const articlesGrid = document.getElementById('articles-grid');
+            const emptyState = document.getElementById('empty-state');
+            
+            loading.style.display = 'none';
+            articlesGrid.style.display = 'none';
+            emptyState.style.display = 'block';
+            
+            emptyState.innerHTML = `
+                <div class="text-red-400 dark:text-red-500">
+                    <i class="fas fa-exclamation-triangle text-6xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Yazılar yüklenemedi</h3>
+                    <p>Lütfen sayfayı yenileyin veya daha sonra tekrar deneyin.</p>
+                </div>
+            `;
+        }
+
+        // Update view count dynamically
+        function updateViewCount(postId, newCount) {
+            const viewCountElements = document.querySelectorAll(`.view-count-${postId}`);
+            viewCountElements.forEach(element => {
+                element.textContent = newCount;
+            });
+        }
+
+        // Refresh view counts for all posts
+        async function refreshViewCounts() {
+            console.log('refreshViewCounts called');
+            try {
+                const response = await fetch('/api/posts');
+                const data = await response.json();
+                console.log('API response:', data);
+                
+                if (data.success) {
+                    const posts = data.data.posts || [];
+                    console.log('Posts from API:', posts);
+                    posts.forEach(post => {
+                        console.log(`Updating view count for post ${post.id}: ${post.view_count}`);
+                        updateViewCount(post.id, post.view_count || 0);
+                    });
+                    
+                    // Update allPosts array with fresh data
+                    allPosts = posts;
+                    console.log('allPosts updated:', allPosts);
+                }
+            } catch (error) {
+                console.error('Error refreshing view counts:', error);
+            }
+        }
+
+        // Increment view count when post is clicked
+        async function incrementViewCount(postId) {
+            try {
+                const response = await fetch(`/api/posts/${postId}/view`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update the view count with the real value from backend
+                    if (data.data && data.data.view_count !== undefined) {
+                        console.log(`YAZILAR: Updated view count for post ${postId} to ${data.data.view_count}`);
+                        updateViewCount(postId, data.data.view_count);
+                        
+                        // Update the allPosts array with the new view count
+                        const postIndex = allPosts.findIndex(post => post.id === postId);
+                        if (postIndex !== -1) {
+                            allPosts[postIndex].view_count = data.data.view_count;
+                        }
+                    }
+                    
+                    // Set a flag in localStorage to inform other pages about view count change
+                    const updateInfo = {
+                        postId: postId,
+                        viewCount: data.data ? data.data.view_count : null,
+                        timestamp: Date.now()
+                    };
+                    console.log('YAZILAR: Setting localStorage flag:', updateInfo);
+                    localStorage.setItem('viewCountUpdated', JSON.stringify(updateInfo));
+                } else {
+                    console.log('YAZILAR: View count increment response:', data.message);
+                }
+            } catch (error) {
+                console.error('Error incrementing view count:', error);
+            }
+        }
+
+        // Handle post click to increment view count and navigate
+        async function handlePostClick(event, postId, url) {
+            event.preventDefault(); // Prevent default navigation
+            
+            try {
+                await incrementViewCount(postId); // Increment view count
+            } catch (error) {
+                console.error('Error incrementing view count:', error);
+                // Continue with navigation even if view count fails
+            }
+            
+            // Navigate to the post page
+            window.location.href = url;
+        }
+
+        // Check for view count updates from other pages
+        function checkViewCountUpdates() {
+            const updateInfo = localStorage.getItem('viewCountUpdated');
+            console.log('checkViewCountUpdates called, updateInfo:', updateInfo);
+            if (updateInfo) {
+                try {
+                    const data = JSON.parse(updateInfo);
+                    console.log('Parsed update info:', data);
+                    // Check if update is recent (within last 5 minutes)
+                    if (Date.now() - data.timestamp < 300000) {
+                        console.log('Update is recent, checking view count');
+                        
+                        // If we have the specific view count, update it directly
+                        if (data.postId && data.viewCount !== null && data.viewCount !== undefined) {
+                            console.log(`Direct update: post ${data.postId} to ${data.viewCount}`);
+                            updateViewCount(data.postId, data.viewCount);
+                            
+                            // Update the allPosts array with the new view count
+                            const postIndex = allPosts.findIndex(post => post.id === data.postId);
+                            if (postIndex !== -1) {
+                                allPosts[postIndex].view_count = data.viewCount;
+                            }
+                        } else {
+                            // Fallback to refreshing all view counts
+                            console.log('Fallback to refreshing all view counts');
+                            refreshViewCounts();
+                        }
+                    } else {
+                        console.log('Update is too old, ignoring');
+                    }
+                    // Clean up the flag
+                    localStorage.removeItem('viewCountUpdated');
+                } catch (error) {
+                    console.error('Error parsing view count update info:', error);
+                    localStorage.removeItem('viewCountUpdated');
+                }
+            }
+        }
+
+        // Initialize posts when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchPosts();
+            initializeFilters();
+            
+            // Check for view count updates immediately
+            checkViewCountUpdates();
+            
+            // Refresh view counts every 10 seconds
+            setInterval(refreshViewCounts, 10000);
+            
+            // Check for view count updates every 2 seconds
+            setInterval(checkViewCountUpdates, 2000);
+            
+            // Refresh view counts when page becomes visible
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    checkViewCountUpdates();
+                    refreshViewCounts();
+                }
+            });
+            
+            // Refresh view counts when page gains focus
+            window.addEventListener('focus', function() {
+                checkViewCountUpdates();
+                refreshViewCounts();
+            });
+        });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+
+        function updateThemeIcons(isDark) {
+            if (isDark) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                mobileThemeIcon.classList.remove('fa-moon');
+                mobileThemeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                mobileThemeIcon.classList.remove('fa-sun');
+                mobileThemeIcon.classList.add('fa-moon');
+            }
+        }
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            updateThemeIcons(isDark);
+            
+            // Save theme preference to localStorage
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
+
+        // Set initial theme on page load
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Use saved theme if available, otherwise use system preference
+            const shouldUseDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+            
+            if (shouldUseDark) {
+                document.documentElement.classList.add('dark');
+                updateThemeIcons(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateThemeIcons(false);
+            }
+            
+            // Save the initial theme choice if not already saved
+            if (!savedTheme) {
+                localStorage.setItem('theme', shouldUseDark ? 'dark' : 'light');
+            }
+        }
+
+        // Initialize theme
+        initializeTheme();
+
+        // Filter functionality
+        function initializeFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    currentFilter = filter;
+                    
+                    // Update button styles
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-primary', 'text-white');
+                        btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    });
+                    
+                    this.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
+                    this.classList.add('bg-primary', 'text-white');
+                    
+                    // Filter articles
+                    filterArticles();
+                });
+            });
+        }
+
+        // Filter articles based on current filter
+        function filterArticles() {
+            const articlesGrid = document.getElementById('articles-grid');
+            const articleCards = articlesGrid.querySelectorAll('.article-card');
+            
+            articleCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                
+                if (currentFilter === 'all' || cardCategory === currentFilter) {
+                    card.style.display = 'block';
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                } else {
+                    card.style.display = 'none';
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8)';
+                }
+            });
+        }
+
+        // Filters are initialized in DOMContentLoaded event
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const savedTheme = localStorage.getItem('theme');
+            // Only update if user hasn't manually set a preference
+            if (!savedTheme) {
+                const shouldUseDark = e.matches;
+                if (shouldUseDark) {
+                    document.documentElement.classList.add('dark');
+                    updateThemeIcons(true);
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    updateThemeIcons(false);
+                }
+                localStorage.setItem('theme', shouldUseDark ? 'dark' : 'light');
+            }
+        });
+
+        // Newsletter subscription functionality
+        async function subscribeNewsletter() {
+            const emailInput = document.getElementById('newsletterEmail');
+            const email = emailInput.value.trim();
+            const messageDiv = document.getElementById('newsletterMessage');
+
+            if (!email) {
+                messageDiv.textContent = 'Lütfen bir e-posta adresi girin.';
+                messageDiv.classList.remove('text-green-500', 'dark:text-green-400');
+                messageDiv.classList.add('text-red-500', 'dark:text-red-400');
+                messageDiv.classList.remove('hidden');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                messageDiv.textContent = 'Geçerli bir e-posta adresi girin.';
+                messageDiv.classList.remove('text-green-500', 'dark:text-green-400');
+                messageDiv.classList.add('text-red-500', 'dark:text-red-400');
+                messageDiv.classList.remove('hidden');
+                return;
+            }
+
+            messageDiv.textContent = 'Aboneliğiniz kaydediliyor...';
+            messageDiv.classList.remove('text-red-500', 'dark:text-red-400');
+            messageDiv.classList.add('text-gray-500', 'dark:text-gray-400');
+            messageDiv.classList.remove('hidden');
+
+            try {
+                                 const response = await fetch('/api/newsletter', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    messageDiv.textContent = 'Aboneliğiniz başarıyla kaydedildi!';
+                    messageDiv.classList.remove('text-gray-500', 'dark:text-gray-400');
+                    messageDiv.classList.add('text-green-500', 'dark:text-green-400');
+                    emailInput.value = ''; // Clear input
+                } else {
+                    messageDiv.textContent = data.message || 'Aboneliğiniz kaydedilemedi.';
+                    messageDiv.classList.remove('text-gray-500', 'dark:text-gray-400');
+                    messageDiv.classList.add('text-red-500', 'dark:text-red-400');
+                }
+            } catch (error) {
+                console.error('Error subscribing to newsletter:', error);
+                messageDiv.textContent = 'Aboneliğiniz kaydedilemedi.';
+                messageDiv.classList.remove('text-gray-500', 'dark:text-gray-400');
+                messageDiv.classList.add('text-red-500', 'dark:text-red-400');
+            }
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html> 

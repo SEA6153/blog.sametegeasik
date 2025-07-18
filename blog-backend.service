@@ -1,0 +1,17 @@
+[Unit]
+Description=Samet Ege Aşık Blog Backend
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/blog-sitesi/backend
+ExecStart=/var/www/blog-sitesi/backend/blog-backend
+Restart=always
+RestartSec=5
+Environment=GIN_MODE=release
+Environment=PRODUCTION_DOMAIN=https://sametegeasik.com
+Environment=PORT=8081
+
+[Install]
+WantedBy=multi-user.target

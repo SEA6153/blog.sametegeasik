@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Basic SEO Meta Tags -->
+    <title>Projeler - Samet Ege Aşık | Java Backend Developer Portfolio</title>
+    <meta name="description" content="Samet Ege Aşık'ın Java Backend Developer olarak geliştirdiği projeler. Spring Boot, OAuth2, mikroservis mimarisi ve modern backend teknolojileri kullanılarak yapılmış projeler ve portfolio.">
+    <meta name="keywords" content="java projeleri, spring boot projeler, oauth2 projeler, mikroservis projeler, backend portfolio, java portfolio, yazılım geliştirme projeleri, github projeler">
+    <meta name="author" content="Samet Ege Aşık">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sametegeasik.com/projeler">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sametegeasik.com/projeler">
+    <meta property="og:title" content="Projeler - Samet Ege Aşık | Java Backend Developer Portfolio">
+    <meta property="og:description" content="Samet Ege Aşık'ın Java Backend Developer olarak geliştirdiği projeler. Spring Boot, OAuth2, mikroservis mimarisi ve modern backend teknolojileri kullanılarak yapılmış projeler.">
+    <meta property="og:image" content="https://sametegeasik.com/sea.jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Samet Ege Aşık">
+    <meta property="og:locale" content="tr_TR">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://sametegeasik.com/projeler">
+    <meta name="twitter:title" content="Projeler - Samet Ege Aşık | Java Backend Developer Portfolio">
+    <meta name="twitter:description" content="Samet Ege Aşık'ın Java Backend Developer olarak geliştirdiği projeler. Spring Boot, OAuth2, mikroservis mimarisi ve modern backend teknolojileri kullanılarak yapılmış projeler.">
+    <meta name="twitter:image" content="https://sametegeasik.com/sea.jpeg">
+    <meta name="twitter:creator" content="@sametegeasik">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Stylesheets -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- ItemList Schema for Projects -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "Samet Ege Aşık Projeler",
+      "description": "Java Backend Developer projeleri",
+      "url": "https://sametegeasik.com/projeler",
+      "numberOfItems": 0,
+      "itemListElement": []
+    }
+    </script>
+    
+    <!-- CreativeWork Schema for Portfolio -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": "Samet Ege Aşık Portfolio",
+      "description": "Java Backend Developer portfolio ve projeler",
+      "creator": {
+        "@type": "Person",
+        "name": "Samet Ege Aşık",
+        "url": "https://sametegeasik.com"
+      },
+      "about": [
+        "Java Programming",
+        "Spring Boot",
+        "OAuth2",
+        "Mikroservis Mimarisi",
+        "Backend Development"
+      ],
+      "genre": "Software Development",
+      "inLanguage": "tr-TR",
+      "url": "https://sametegeasik.com/projeler"
+    }
+    </script>
+    
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Ana Sayfa",
+          "item": "https://sametegeasik.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projeler",
+          "item": "https://sametegeasik.com/projeler"
+        }
+      ]
+    }
+    </script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6366f1',
+                        'secondary': '#8b5cf6',
+                        'accent': '#06b6d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Theme transition */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* Theme toggle button animation */
+        .theme-toggle {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+        
+        .theme-toggle:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="/">
+                            <h1 class="text-2xl font-bold text-primary">
+                                <i class="fas fa-code mr-2"></i>Samet Ege AŞIK
+                            </h1>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Ana Sayfa</a>
+                        <a href="/yazilar" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Yazılar</a>
+                        <a href="/projeler" class="text-primary px-3 py-2 rounded-md text-sm font-medium">Projeler</a>
+                        <a href="/hakkimda" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Hakkımda</a>
+                        <a href="/iletisim" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">İletişim</a>
+                        <!-- Theme Toggle Button -->
+                        <button id="themeToggle" class="theme-toggle text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i id="themeIcon" class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden flex items-center space-x-2">
+                    <!-- Mobile Theme Toggle -->
+                    <button id="mobileThemeToggle" class="theme-toggle text-gray-700 dark:text-gray-300 hover:text-primary p-2 rounded-md">
+                        <i id="mobileThemeIcon" class="fas fa-moon"></i>
+                    </button>
+                    <button class="text-gray-700 dark:text-gray-300 hover:text-primary" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden bg-white dark:bg-gray-800 shadow-lg hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Ana Sayfa</a>
+                <a href="/yazilar" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Yazılar</a>
+                <a href="/projeler" class="block px-3 py-2 text-primary">Projeler</a>
+                <a href="/hakkimda" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">Hakkımda</a>
+                <a href="/iletisim" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">İletişim</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="bg-gradient-to-r from-primary to-secondary text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    <i class="fas fa-project-diagram mr-3"></i>Projelerim
+                </h1>
+                <p class="text-xl text-gray-200">
+                    Java Backend Development ve Full-Stack uygulamalar
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Projects Section -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Loading State -->
+            <div id="loading" class="text-center py-12">
+                <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
+                <p class="text-gray-500 dark:text-gray-400">Projeler yükleniyor...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="error" class="text-center py-12 hidden">
+                <div class="text-red-500 text-6xl mb-4">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Hata Oluştu</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Projeler yüklenirken bir hata oluştu.</p>
+                <button onclick="loadProjects()" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-secondary transition-colors">
+                    <i class="fas fa-refresh mr-2"></i>Tekrar Dene
+                </button>
+                </div>
+                
+            <!-- Dynamic Projects Container -->
+            <div id="projectsContainer" class="hidden">
+                <!-- Active Projects -->
+                <div id="activeProjects" class="mb-16">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                            <i class="fas fa-star text-yellow-500 mr-2"></i>Aktif Projeler
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-300">Şu anda üzerinde çalıştığım projeler</p>
+                                </div>
+                    <div id="activeProjectsGrid" class="grid grid-cols-1 gap-8">
+                        <!-- Active projects will be inserted here -->
+                </div>
+            </div>
+
+                <!-- Completed Projects -->
+                <div id="completedProjects" class="mb-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>Tamamlanan Projeler
+                    </h2>
+                    <p class="text-gray-600 dark:text-gray-400">Geçmiş projeler ve kişisel çalışmalar</p>
+                    </div>
+                    <div id="completedProjectsGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Completed projects will be inserted here -->
+                        </div>
+                    </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="text-center py-12 hidden">
+                    <div class="text-gray-400 text-6xl mb-4">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Henüz Proje Bulunmuyor</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Yakında yeni projeler eklenecek!</p>
+                </div>
+            </div>
+
+            <!-- Skills Overview -->
+            <div class="mb-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                        <i class="fas fa-tools text-primary mr-2"></i>Kullandığım Teknolojiler
+                    </h2>
+                    <p class="text-gray-600 dark:text-gray-400">Projelerimde kullandığım teknoloji yığını</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-server text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Backend</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700 dark:text-gray-300">Java</span>
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700 dark:text-gray-300">Spring Boot</span>
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700 dark:text-gray-300">OAuth2</span>
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                        <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-database text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Database & Cache</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700 dark:text-gray-300">PostgreSQL</span>
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700 dark:text-gray-300">Redis</span>
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700 dark:text-gray-300">Kafka</span>
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center">
+                        <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-tools text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">DevOps & Tools</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700 dark:text-gray-300">Docker</span>
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700 dark:text-gray-300">Kubernetes</span>
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-700 dark:text-gray-300">Git</span>
+                                <div class="flex space-x-1">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <i class="fas fa-star text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-code mr-2"></i>Samet Ege Aşık
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        Java Backend Developer @ MEB YEĞİTEK. Mikroservis mimarisi, OAuth2 ve 
+                        modern backend teknolojileri üzerine yazılar.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/in/samet-ege-asik/" target="_blank" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-2xl"></i>
+                        </a>
+                        <a href="mailto:blog.sametegeasik@gmail.com" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fas fa-envelope text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Teknolojiler</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Java & Spring Boot</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">OAuth2 & Security</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Redis & Kafka</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Docker & CI/CD</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Bağlantılar</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Ana Sayfa</a></li>
+                        <li><a href="/yazilar" class="text-gray-400 hover:text-white transition-colors">Yazılar</a></li>
+                        <li><a href="/projeler" class="text-gray-400 hover:text-white transition-colors">Projeler</a></li>
+                        <li><a href="/hakkimda" class="text-gray-400 hover:text-white transition-colors">Hakkımda</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 Samet Ege AŞIK. Tüm hakları saklıdır.
+                    <a href="/admin" class="text-gray-600 hover:text-gray-400 transition-colors ml-4 text-sm" title="Admin Paneli">
+                        <i class="fas fa-shield-alt"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme management
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            html.classList.add('dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+            mobileThemeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        function toggleTheme() {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                mobileThemeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                mobileThemeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        mobileThemeToggle.addEventListener('click', toggleTheme);
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // API Functions
+        async function loadProjects() {
+            try {
+                showLoading();
+                const response = await fetch('/api/projects');
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayProjects(data.data);
+                } else {
+                    showError();
+                }
+            } catch (error) {
+                console.error('Error loading projects:', error);
+                showError();
+            }
+        }
+
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('projectsContainer').style.display = 'none';
+        }
+
+        function showError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('projectsContainer').style.display = 'none';
+        }
+
+        function displayProjects(projects) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('projectsContainer').style.display = 'block';
+
+            if (projects.length === 0) {
+                document.getElementById('emptyState').style.display = 'block';
+                return;
+            }
+
+            const activeProjects = projects.filter(project => project.status === 'active');
+            const completedProjects = projects.filter(project => project.status === 'completed');
+
+            const activeGrid = document.getElementById('activeProjectsGrid');
+            const completedGrid = document.getElementById('completedProjectsGrid');
+
+            activeGrid.innerHTML = '';
+            completedGrid.innerHTML = '';
+
+            // Display active projects
+            if (activeProjects.length > 0) {
+                activeProjects.forEach(project => {
+                    activeGrid.appendChild(createActiveProjectCard(project));
+                });
+            } else {
+                document.getElementById('activeProjects').style.display = 'none';
+            }
+
+            // Display completed projects
+            if (completedProjects.length > 0) {
+                completedProjects.forEach(project => {
+                    completedGrid.appendChild(createCompletedProjectCard(project));
+                });
+            } else {
+                document.getElementById('completedProjects').style.display = 'none';
+            }
+        }
+
+        function createActiveProjectCard(project) {
+            const div = document.createElement('div');
+            div.className = 'bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden';
+            
+            const technologies = parseProjectTechnologies(project.technologies);
+            const techTags = technologies.map(tech => `<span class="bg-primary text-white px-3 py-1 rounded-full text-sm">${tech}</span>`).join('');
+            
+            div.innerHTML = `
+                <div class="md:flex">
+                    <div class="md:w-1/2 bg-gradient-to-br from-primary to-accent p-12 text-white">
+                        <div class="text-center mb-6">
+                            <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-shield-alt text-primary text-4xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">${project.title}</h3>
+                            <p class="text-gray-200">${project.description}</p>
+                        </div>
+                        <div class="text-center">
+                            <span class="bg-white text-primary px-4 py-2 rounded-full text-sm font-medium">
+                                ${new Date(project.start_date).getFullYear()} - Devam Ediyor
+                            </span>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 p-8">
+                        <div class="mb-6">
+                            <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Proje Detayları</h4>
+                            <p class="text-gray-600 dark:text-gray-300 mb-6">${project.content}</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Teknoloji Yığını</h4>
+                            <div class="flex flex-wrap gap-2">${techTags}</div>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-300 px-4 py-2 rounded-lg">
+                                <i class="fas fa-play mr-2"></i>Aktif Geliştirme
+                            </div>
+                            <div class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-300 px-4 py-2 rounded-lg">
+                                <i class="fas fa-building mr-2"></i>Enterprise
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        function createCompletedProjectCard(project) {
+            const div = document.createElement('div');
+            div.className = 'bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300';
+            
+            const technologies = parseProjectTechnologies(project.technologies);
+            const techTags = technologies.map(tech => `<span class="bg-primary text-white px-2 py-1 rounded text-sm">${tech}</span>`).join('');
+            
+            const githubLink = project.github_url ? 
+                `<a href="${project.github_url}" target="_blank" class="text-blue-500 hover:text-blue-700 mr-2">
+                    <i class="fab fa-github"></i> GitHub
+                </a>` : '';
+            
+            const demoLink = project.demo_url ? 
+                `<a href="${project.demo_url}" target="_blank" class="text-green-500 hover:text-green-700">
+                    <i class="fas fa-external-link-alt"></i> Demo
+                </a>` : '';
+            
+            div.innerHTML = `
+                <div class="h-48 bg-gradient-to-br from-secondary to-primary relative">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i class="fas fa-project-diagram text-white text-6xl"></i>
+                    </div>
+                    <div class="absolute top-4 right-4 bg-white text-secondary px-3 py-1 rounded-full text-sm font-medium">
+                        Tamamlandı
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">${project.title}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">${project.description}</p>
+                    <div class="flex flex-wrap gap-2 mb-4">${techTags}</div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-500 dark:text-gray-400 text-sm">
+                            ${new Date(project.start_date).toLocaleDateString('tr-TR')} - 
+                            ${project.end_date ? new Date(project.end_date).toLocaleDateString('tr-TR') : 'Devam Ediyor'}
+                        </span>
+                        <div class="flex space-x-2">
+                            ${githubLink}
+                            ${demoLink}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return div;
+        }
+
+        function parseProjectTechnologies(technologies) {
+            try {
+                return JSON.parse(technologies || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProjects();
+        });
+    </script>
+</body>
+</html> 
